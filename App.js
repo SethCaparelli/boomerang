@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
-import { StackNavigator } from "react-navigation"
+// import { StackNavigator } from "react-navigation"
 import User from "./components/User"
 
 
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -80,7 +80,7 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <Map /> */}
+        <User />
         <TouchableOpacity
           onPress={this._login}
         >
@@ -91,14 +91,14 @@ class App extends React.Component {
   }
 }
 
-export default StackNavigator ({
-  Home: {
-    screen: App,
-  },
-  User: {
-    screen: User
-  }
-})
+// export default StackNavigator ({
+//   Home: {
+//     screen: App,
+//   },
+//   User: {
+//     screen: User
+//   }
+// })
 
 const styles = StyleSheet.create({
   container: {

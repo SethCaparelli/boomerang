@@ -1,82 +1,37 @@
+import Expo from 'expo';
 import React, { Component } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
-import { Constants, Location, Permissions, MapView } from 'expo';
+import { Constants, Location, Permissions } from 'expo';
+
+const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 };
+
 
 export default class Map extends Component {
-  constructor(props) {
-    super(props)
-      this.state = {
-        currentUser: this.props.navigation.state.params.currentUser,
-        location: null,
-        errorMessage: null,
-      }
-  }
+  state = {
+    location: { coords: {latitude: 0, longitude: 0}},
+  };
 
   componentWillMount() {
-    this._getLocationAsync();
+    Location.watchPositionAsync(GEOLOCATION_OPTIONS, this.locationChanged);
   }
 
-  _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied',
-      });
-    }
-
-    let location = await Location.getCurrentPositionAsync({});
-    console.log(location)
-    let pointLocation = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
-    }
-    this.setState({
-        location: pointLocation
-    })
+  locationChanged = (location) => {
+    region = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.05,
+    },
+    this.setState({location, region})
   }
 
   render() {
-    let text = 'Waiting..';
-    if (this.state.errorMessage) {
-      text = this.state.errorMessage;
-    } else if (this.state.location) {
-      text = JSON.stringify(this.state.location);
-    }
-
     return (
-      <View style={styles.container}>
-      {this.state.location
-        ?
-        <MapView
-            style={{width: 300, height: 400 }}
-            initialRegion={{
-                latitude: this.state.location.latitude,
-                longitude: this.state.location.longitude,
-                latitudeDelta: 0.00000001,
-                longitudeDelta: 0.000001
-            }}
-            showsUserLocation={true}
-            showsMyLocationButton={true}
-            provider="google"
+        <Expo.MapView
+          style={{ flex: 0.5, width: 300}}
+          showsUserLocation={true}
+          region={this.state.region}
         />
-        : <Text>...Loading</Text>}
-        <Text style={styles.paragraph}>{text}</Text>
-      </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    textAlign: 'center',
-  },
-});
