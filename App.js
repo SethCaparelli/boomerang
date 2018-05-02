@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import Map from "./components/Map"
+// import { MapView } from 'expo';
 
 
 
@@ -73,6 +75,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Map />
         <TouchableOpacity
           onPress={this._login}
         >
