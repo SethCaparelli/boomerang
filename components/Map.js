@@ -46,8 +46,15 @@ export default class Map extends Component {
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
-  };
+    console.log(location)
+    let pointLocation = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+    }
+    this.setState({
+        location: pointLocation
+    })
+  }
 
   render() {
     let text = 'Waiting..';
@@ -64,10 +71,10 @@ export default class Map extends Component {
         <MapView
             style={{width: 300, height: 400 }}
             initialRegion={{
-                latitude: this.state.location.coords.latitude,
-                longitude: this.state.location.coords.longitude,
-                latitudeDelta: .02,
-                longitudeDelta: .02,
+                latitude: this.state.location.latitude,
+                longitude: this.state.location.longitude,
+                latitudeDelta: 0.00000001,
+                longitudeDelta: 0.000001
             }}
             showsUserLocation={true}
             showsMyLocationButton={true}
