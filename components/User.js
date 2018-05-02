@@ -1,37 +1,16 @@
-// import React from 'react';
-// import { MapView } from 'expo';
-// import { View, Text } from "react-native"
-
-// export default class App extends React.Component {
-//   render() {
-//     return (
-//         <View>
-//             <MapView
-//                 style={{width: 400, height: 400 }}
-//                 initialRegion={{
-//                     latitude: 37.78825,
-//                     longitude: -122.4324,
-//                     latitudeDelta: .02,
-//                     longitudeDelta: .02,
-//                 }}
-//                 showsUserLocation={true}
-//                 showsMyLocationButton={true}
-//                 provider="google"
-//             />
-//         </View>
-//     );
-//   }
-// }
-
 import React, { Component } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import { Constants, Location, Permissions, MapView } from 'expo';
 
 export default class Map extends Component {
-  state = {
-    location: null,
-    errorMessage: null,
-  };
+  constructor(props) {
+    super(props)
+      this.state = {
+        currentUser: this.props.navigation.state.params.currentUser,
+        location: null,
+        errorMessage: null,
+      }
+  }
 
   componentWillMount() {
     this._getLocationAsync();

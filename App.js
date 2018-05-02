@@ -1,16 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
-import Map from "./components/Map"
-// import { MapView } from 'expo';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
+import { StackNavigator } from "react-navigation"
+import User from "./components/User"
 
 
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       currentUser: {}
     }
+  }
+  static navigationOptions = {
+    title: 'Home'
   }
 
   _login = () => {
@@ -37,6 +40,7 @@ export default class App extends React.Component {
                   this.setState({
                     currentUser: userExists
                   })
+                  return this.props.navigation.navigate("User", {currentUser: this.state.currentUser})
                 } else {
                   let newUser = {
                     fbId: fbUser.id,
@@ -57,6 +61,7 @@ export default class App extends React.Component {
                     this.setState({
                       currentUser: user
                     })
+                    return this.props.navigation.navigate("User", {currentUser: this.state.currentUser})
                   })
                   .catch(error => console.log(error))
                 }
@@ -67,7 +72,7 @@ export default class App extends React.Component {
           reject('ERROR GETTING DATA FROM FACEBOOK')
         })
       } else {
-        Alert.alert("Unable to connect to facebook")
+        Alert.alert("Unable to connect to Facebook")
       }
     })
   }
@@ -75,7 +80,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Map />
+        {/* <Map /> */}
         <TouchableOpacity
           onPress={this._login}
         >
@@ -85,6 +90,15 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default StackNavigator ({
+  Home: {
+    screen: App,
+  },
+  User: {
+    screen: User
+  }
+})
 
 const styles = StyleSheet.create({
   container: {
