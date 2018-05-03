@@ -1,17 +1,34 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
-// import { StackNavigator } from "react-navigation"
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from 'react-native'
+import { StackNavigator } from "react-navigation"
 import User from "./components/User"
+import AllUsers from "./components/AllUsers"
+import { SocialIcon, Avatar } from 'react-native-elements'
 
 
-
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: {}
+      currentUser: {
+        fbId: 211473406297130,
+        name: "Seth Caparelli",
+        boomerangSent: [],
+        email: "",
+        fbId: 211473406297130,
+        isDeleted: false,
+        name: "Seth Caparelli",
+        spots: [],
+        _id: "5ae93947d849586629b225c3"
+      },
+      userPicture: {
+        data: {
+          url: "https://lookaside.facebook.com/platform/profilepic/?asid=211473406297130&height=200&width=200&ext=1525620472&hash=AeToBJ1YPcYdW7Qg"          
+        }
+      }
     }
   }
+
   static navigationOptions = {
     title: 'Home'
   }
@@ -28,6 +45,9 @@ export default class App extends React.Component {
         .then((response) => response.json())
         .then((fbUser) => {
           console.log(fbUser)
+          this.setState({
+            userPicture: fbUser.picture
+          })
           fetch("http://localhost:3000/users")
             .then(response => response.json())
             .then(users => {
@@ -40,7 +60,7 @@ export default class App extends React.Component {
                   this.setState({
                     currentUser: userExists
                   })
-                  return this.props.navigation.navigate("User", {currentUser: this.state.currentUser})
+                  return this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})
                 } else {
                   let newUser = {
                     fbId: fbUser.id,
@@ -58,10 +78,11 @@ export default class App extends React.Component {
                   })
                   .then(response => response.json())
                   .then(user => {
+                    console.log(user)
                     this.setState({
                       currentUser: user
                     })
-                    return this.props.navigation.navigate("User", {currentUser: this.state.currentUser})
+                    return this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})
                   })
                   .catch(error => console.log(error))
                 }
@@ -80,25 +101,31 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <User />
-        <TouchableOpacity
+        <SocialIcon
+          title='Sign In With Facebook'
+          button
+          type='facebook'
+          // onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
           onPress={this._login}
-        >
-          <Text>FaceBook</Text>
-        </TouchableOpacity>
+          style={{width: 300}}
+        />
+
       </View>
     );
   }
 }
 
-// export default StackNavigator ({
-//   Home: {
-//     screen: App,
-//   },
-//   User: {
-//     screen: User
-//   }
-// })
+export default StackNavigator ({
+  Home: {
+    screen: App,
+  },
+  User: {
+    screen: User
+  },
+  AllUsers: {
+    screen: AllUsers
+  }
+})
 
 const styles = StyleSheet.create({
   container: {
