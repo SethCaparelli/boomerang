@@ -37,16 +37,18 @@ export default class App extends Component {
   render() {
     return (
         <View style={styles.container}>
-           <Avatar
-              large
-              rounded
-              source={{uri: this.state.userPicture.data.url}}
-              onPress={() => console.log("Works!")}
-              activeOpacity={0.7}
-            />
-          <Text>{this.state.currentUser.name}</Text>
+          <View style={styles.avatarContainer}>
+            <Avatar
+                large
+                rounded
+                source={{uri: this.state.userPicture.data.url}}
+                onPress={() => console.log("Works!")}
+                activeOpacity={0.7}
+              />
+            <Text>{this.state.currentUser.name}</Text>
+          </View>
           <Expo.MapView
-            style={{ flex: 1, width: "100%"}}
+            style={styles.map}
             showsUserLocation={true}
             region={this.state.region}
           />
@@ -77,6 +79,19 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 0.25
+  },
+  avatarContainer: {
+    zIndex: 1
+  },
+  map: {
+    zIndex: 0,
+    flex: 0.75,
+    width: "100%",
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
   }
 
 })
