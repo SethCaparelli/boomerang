@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native"
+import { View, Text, StyleSheet, Image, ScrollView, Alert, TouchableOpacity } from "react-native"
 import { ListItem, Avatar } from 'react-native-elements'
 
 export default class AllUsers extends Component {
@@ -22,20 +22,36 @@ export default class AllUsers extends Component {
             this.setState({users})
         })
     }
+
+    alertAddUser = (user) => {
+        console.log(user.name)
+        Alert.alert(
+            user.name,
+            'Add as Friend',
+            [
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'OK', onPress: (user) => console.log("user " + user)},
+            ],
+            {cancelable: true}
+            )
+    }
+
   render() {
     return (
         <ScrollView>
         <View style={styles.container}>
             {
-                this.state.users.map((user, i) => {
+                this.state.users.map((user) => {
                     return (
-                        <View
+                        <TouchableOpacity
+                            key={user._id}
+                            onPress={(user) => this.alertAddUser(user)}
                             style={styles.card}>
                             <Image
-                                style={{width: 75, height: 75, borderRadius: "50%"}}
+                                style={{width: 75, height: 75, borderRadius: "40%"}}
                                 source={{uri: user.picture.data.url}}/>
                             <Text>{user.name}</Text>
-                        </View>
+                        </TouchableOpacity>
                     )
                 })
             }
