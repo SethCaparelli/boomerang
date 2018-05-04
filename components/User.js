@@ -14,7 +14,8 @@ export default class App extends Component {
           coords: {
             latitude: 0,
             longitude: 0}
-          }
+          },
+          currentUser: this.props.navigation.state.params.currentUser
       }
     }
   componentWillMount() {
@@ -37,7 +38,7 @@ export default class App extends Component {
            <Avatar
               large
               rounded
-              // source={{uri: this.state.currentUser.picture.data}}
+              // source={{uri: this.state.currentUser.picture.data.url}}
               onPress={() => console.log("Works!")}
               activeOpacity={0.7}
             />
