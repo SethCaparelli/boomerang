@@ -1,12 +1,13 @@
-import Expo from 'expo';
-import React, { Component } from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
-import { Constants, Location, Permissions, Components } from 'expo';
+import Expo from "expo"
+import React, { Component } from "react"
+import { Platform, Text, View, StyleSheet } from "react-native"
+import { Constants, Location, Permissions, Components } from "expo"
 import { Avatar, Button } from "react-native-elements"
 import mapStyle from "../jsons/mapStyle.json"
+import TabNavigator from 'react-native-tab-navigator'
 
 
-const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 };
+const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 
 export default class App extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ export default class App extends Component {
       }
     }
   componentWillMount() {
-    Location.watchPositionAsync(GEOLOCATION_OPTIONS, this.locationChanged);
+    Location.watchPositionAsync(GEOLOCATION_OPTIONS, this.locationChanged)
   }
 
   locationChanged = (location) => {
@@ -57,7 +58,7 @@ export default class App extends Component {
           />
           <View style={styles.buttonContainer}>
             <Button
-              title='Boomerangers'
+              title="Boomerangers"
               onPress={() => this.props.navigation.navigate("AllUsers", {currentUser: this.state.currentUser})}
               buttonStyle={{
                 backgroundColor: "rgba(92, 99,216, 1)",
@@ -70,7 +71,7 @@ export default class App extends Component {
             />
           </View>
         </View>
-    );
+    )
   }
 }
 
@@ -81,7 +82,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   buttonContainer: {
-    flex: 0.25
+    flex: 0.1,
+    backgroundColor: "black",
+    width: "100%"
   },
   avatarContainer: {
     flex: 0.15,
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
   },
   map: {
     zIndex: 0,
-    flex: 0.75,
+    flex: 1,
     width: "100%",
     position: "absolute",
     top: 0,

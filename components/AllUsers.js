@@ -1,17 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from "react"
 import { View, Text, StyleSheet, Image, ScrollView, Alert, TouchableOpacity } from "react-native"
-import { ListItem, Avatar } from 'react-native-elements'
+import { ListItem, Avatar } from "react-native-elements"
 
 export default class AllUsers extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            users: []
+            users: [],
+            currentUser: this.props.navigation.state.params.currentUser
         }
     }
 
     static navigationOptions = {
-        title: 'Boomerangers'
+        title: "Boomerangers"
       }
 
     componentDidMount() {
@@ -21,19 +22,59 @@ export default class AllUsers extends Component {
         .then(users => {
             this.setState({users})
         })
+        .catch(error => console.log(error))
     }
 
     alertAddUser = (user) => {
-        console.log(user.name)
+        // console.log("alertaddUser:", user)
+        // debugger
         Alert.alert(
             user.name,
             'Add as Friend',
             [
-            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'OK', onPress: (user) => console.log("user " + user)},
+              {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: 'OK', onPress: () => this.postFriend(user)},
             ],
-            {cancelable: true}
-            )
+            { cancelable: true }
+          )
+    }
+
+    postFriend = (user) => {
+        console.log("postuser:", user)
+        this.state.currentUser.friends.push(user)
+        const id = this.state.currentUser._id
+        fetch("http://localhost:3000/users")
+        .then(response => response.json())
+        .then(friends => {
+            const sameFriend = friends.filter(friend => {
+                return friend._id == user._id
+            })
+            console.log("postUser:", user)
+            console.log("sameFriend:", sameFriend)
+            if(sameFriend.length > 0) {
+                Alert.alert(
+                    `${user.name} is already your friend`,
+                    [
+                    {text: "Cancel", style: "cancel"},
+                    {text: "OK"},
+                    ],
+                    {cancelable: true}
+                    )
+            } else {
+                debugger
+                fetch(`http://localhost:3000/users/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(this.state.currentUser)
+                    })
+                .then(response => consol.log(response))
+                .catch(error => console.log(error))
+            }
+        })
+        .catch(error => console.log(error))
     }
 
   render() {
@@ -45,12 +86,12 @@ export default class AllUsers extends Component {
                     return (
                         <TouchableOpacity
                             key={user._id}
-                            onPress={(user) => this.alertAddUser(user)}
+                            onPress={() => this.alertAddUser(user)}
                             style={styles.card}>
                             <Image
                                 style={{width: 75, height: 75, borderRadius: "40%"}}
                                 source={{uri: user.picture.data.url}}/>
-                            <Text>{user.name}</Text>
+                            <Text style={{width: "100%", textAlign: "center"}}>{user.name}</Text>
                         </TouchableOpacity>
                     )
                 })
@@ -74,7 +115,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderRadius: 4,
         borderWidth: 0.5,
-        borderColor: 'black',
+        borderColor: "black",
         marginTop: 1,
         marginBottom: 1,
         backgroundColor: "white"

@@ -1,9 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from 'react-native'
+import React from "react"
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from "react-native"
 import { StackNavigator } from "react-navigation"
 import User from "./components/User"
 import AllUsers from "./components/AllUsers"
-import { SocialIcon, Avatar } from 'react-native-elements'
+import { SocialIcon, Avatar } from "react-native-elements"
 
 
 class App extends React.Component {
@@ -19,6 +19,7 @@ class App extends React.Component {
         isDeleted: false,
         name: "Seth Caparelli",
         spots: [],
+        friends: [],
         _id: "5ae93947d849586629b225c3"
       },
       userPicture: {
@@ -30,7 +31,7 @@ class App extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Home'
+    title: "Home"
   }
 
   _login = () => {
@@ -38,24 +39,20 @@ class App extends React.Component {
       permissions: ["public_profile"]
     })
     .then(response => {
-      console.log(response)
       const { token, type } = response
       if(type === "success") {
         fetch(`https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=${token}&fields=id,name,picture.type(large)`)
         .then((response) => response.json())
         .then((fbUser) => {
-          console.log(fbUser)
           this.setState({
             userPicture: fbUser.picture
           })
           fetch("http://localhost:3000/users")
             .then(response => response.json())
             .then(users => {
-              console.log(users)
               const userExists = users.find(user => {
                 return fbUser.id == user.fbId
               })
-                console.log(userExists)
                 if(userExists) {
                   this.setState({
                     currentUser: userExists
@@ -78,7 +75,6 @@ class App extends React.Component {
                   })
                   .then(response => response.json())
                   .then(user => {
-                    console.log(user)
                     this.setState({
                       currentUser: user
                     })
@@ -90,7 +86,7 @@ class App extends React.Component {
             .catch(error => console.log(error))
         })
         .catch(() => {
-          reject('ERROR GETTING DATA FROM FACEBOOK')
+          reject("ERROR GETTING DATA FROM FACEBOOK")
         })
       } else {
         Alert.alert("Unable to connect to Facebook")
@@ -102,16 +98,16 @@ class App extends React.Component {
     return (
       <View style={styles.container}>
         <SocialIcon
-          title='Sign In With Facebook'
+          title="Sign In With Facebook"
           button
-          type='facebook'
-          onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
-          // onPress={this._login}
+          type="facebook"
+          // onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
+          onPress={this._login}
           style={{width: 300}}
         />
 
       </View>
-    );
+    )
   }
 }
 
@@ -130,8 +126,8 @@ export default StackNavigator ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
-});
+})
