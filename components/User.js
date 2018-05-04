@@ -15,7 +15,8 @@ export default class App extends Component {
             latitude: 0,
             longitude: 0}
           },
-          currentUser: this.props.navigation.state.params.currentUser
+          currentUser: this.props.navigation.state.params.currentUser,
+          userPicture: this.props.navigation.state.params.userPicture
       }
     }
   componentWillMount() {
@@ -34,16 +35,16 @@ export default class App extends Component {
 
   render() {
     return (
-        <View style={{flex: 1}}>
+        <View style={styles.container}>
            <Avatar
               large
               rounded
-              // source={{uri: this.state.currentUser.picture.data.url}}
+              source={{uri: this.state.userPicture.data.url}}
               onPress={() => console.log("Works!")}
               activeOpacity={0.7}
             />
           <Expo.MapView
-            style={{ flex: 1 }}
+            style={{ flex: 1, width: "100%"}}
             showsUserLocation={true}
             region={this.state.region}
           />
@@ -51,3 +52,11 @@ export default class App extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between"
+  }
+})
