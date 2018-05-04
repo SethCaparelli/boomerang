@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text } from "react-native"
-import { ListItem } from 'react-native-elements'
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native"
+import { ListItem, Avatar } from 'react-native-elements'
 
 export default class AllUsers extends Component {
     constructor(props) {
@@ -15,6 +15,7 @@ export default class AllUsers extends Component {
       }
 
     componentDidMount() {
+        console.log(this.state.users)
         fetch("http://localhost:3000/users")
         .then(response => response.json())
         .then(users => {
@@ -23,18 +24,30 @@ export default class AllUsers extends Component {
     }
   render() {
     return (
-      <View>
+        <ScrollView>
         {
-            this.state.users.map((user, i) => (
-            <ListItem
-                key={i}
-                avatar={{ source: { uri: user.picture.data.url } }}
-                title={user.name}
-                // subtitle={l.subtitle}
-            />
-            ))
+            this.state.users.map((user, i) => {
+                return (
+                    <View>
+                        <Image
+                            style={{width: 75, height: 75, borderRadius: "50%"}}
+                            source={{uri: user.picture.data.url}}/>
+                    </View>
+                )
+            })
         }
-      </View>
+      </ScrollView>
     )
   }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    // listContainer: {
+    //     flex: 1,
+    //     width: "100%"
+    // }
+})

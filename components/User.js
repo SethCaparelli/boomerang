@@ -2,7 +2,8 @@ import Expo from 'expo';
 import React, { Component } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
-import { Avatar } from "react-native-elements"
+import { Avatar, Button } from "react-native-elements"
+
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 };
 
@@ -43,11 +44,26 @@ export default class App extends Component {
               onPress={() => console.log("Works!")}
               activeOpacity={0.7}
             />
+          <Text>{this.state.currentUser.name}</Text>
           <Expo.MapView
             style={{ flex: 1, width: "100%"}}
             showsUserLocation={true}
             region={this.state.region}
           />
+          <View style={styles.buttonContainer}>
+            <Button
+              title='Boomerangers'
+              onPress={() => this.props.navigation.navigate("AllUsers", {currentUser: this.state.currentUser})}
+              buttonStyle={{
+                backgroundColor: "rgba(92, 99,216, 1)",
+                width: 300,
+                height: 45,
+                borderColor: "transparent",
+                borderWidth: 0,
+                borderRadius: 5
+              }}
+            />
+          </View>
         </View>
     );
   }
@@ -58,5 +74,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between"
+  },
+  buttonContainer: {
+    flex: 0.25
   }
+
 })
