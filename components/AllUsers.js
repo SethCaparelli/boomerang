@@ -25,19 +25,21 @@ export default class AllUsers extends Component {
   render() {
     return (
         <ScrollView>
-        {
-            this.state.users.map((user, i) => {
-                return (
-                    <View
-                        style={styles.cardContainer}>
-                        <Image
-                            style={{width: 75, height: 75, borderRadius: "50%"}}
-                            source={{uri: user.picture.data.url}}/>
-                        <Text>{user.name}</Text>
-                    </View>
-                )
-            })
-        }
+        <View style={styles.container}>
+            {
+                this.state.users.map((user, i) => {
+                    return (
+                        <View
+                            style={styles.card}>
+                            <Image
+                                style={{width: 75, height: 75, borderRadius: "50%"}}
+                                source={{uri: user.picture.data.url}}/>
+                            <Text>{user.name}</Text>
+                        </View>
+                    )
+                })
+            }
+        </View>
       </ScrollView>
     )
   }
@@ -45,10 +47,12 @@ export default class AllUsers extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: "center",
-        alignItems: "center"
+        flex: 1,
+        // justifyContent: "center",
+        // alignItems: "center",
+        backgroundColor: "black"
     },
-    cardContainer: {
+    card: {
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "row",
@@ -56,6 +60,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: 'black',
         marginTop: 1,
-        marginBottom: 1
+        marginBottom: 1,
+        backgroundColor: "white"
    }
 })
