@@ -1,8 +1,9 @@
 import Expo from 'expo';
 import React, { Component } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
-import { Constants, Location, Permissions } from 'expo';
+import { Constants, Location, Permissions, Components } from 'expo';
 import { Avatar, Button } from "react-native-elements"
+import mapStyle from "../jsons/mapStyle.json"
 
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 };
@@ -48,6 +49,8 @@ export default class App extends Component {
             <Text>{this.state.currentUser.name}</Text>
           </View>
           <Expo.MapView
+            provider={Expo.MapView.PROVIDER_GOOGLE}
+            customMapStyle={mapStyle}
             style={styles.map}
             showsUserLocation={true}
             region={this.state.region}
