@@ -28,7 +28,8 @@ export default class AllUsers extends Component {
         {
             this.state.users.map((user, i) => {
                 return (
-                    <View style={styles.cardContainer}>
+                    <View
+                        style={styles.cardContainer}>
                         <Image
                             style={{width: 75, height: 75, borderRadius: "50%"}}
                             source={{uri: user.picture.data.url}}/>
