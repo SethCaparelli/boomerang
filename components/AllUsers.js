@@ -28,10 +28,11 @@ export default class AllUsers extends Component {
         {
             this.state.users.map((user, i) => {
                 return (
-                    <View>
+                    <View style={styles.cardContainer}>
                         <Image
                             style={{width: 75, height: 75, borderRadius: "50%"}}
                             source={{uri: user.picture.data.url}}/>
+                        <Text>{user.name}</Text>
                     </View>
                 )
             })
@@ -46,8 +47,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    // listContainer: {
-    //     flex: 1,
-    //     width: "100%"
-    // }
+    cardContainer: {
+        justifyContent: "flex-start",
+        alignItems: "center",
+        flexDirection: "row",
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: 'black',
+        marginTop: 1,
+        marginBottom: 1
+   }
 })
