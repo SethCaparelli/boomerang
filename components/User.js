@@ -46,7 +46,7 @@ export default class App extends Component {
                 onPress={() => console.log("Works!")}
                 activeOpacity={0.7}
               />
-            <Text>{this.state.currentUser.name}</Text>
+            <Text style={{color: "white", fontSize: 20}}>{this.state.currentUser.name}</Text>
           </View>
           <Expo.MapView
             provider={Expo.MapView.PROVIDER_GOOGLE}
@@ -84,7 +84,10 @@ const styles = StyleSheet.create({
     flex: 0.25
   },
   avatarContainer: {
-    zIndex: 1
+    flex: 0.15,
+    zIndex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   },
   map: {
     zIndex: 0,
