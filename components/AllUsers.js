@@ -38,12 +38,14 @@ export default class AllUsers extends Component {
     }
 
     postFriend = (user) => {
+        const friend = user
         console.log("postuser:", user)
         const id = this.state.currentUser.fbId
+        console.log(id)
         fetch(`http://localhost:3000/users/${id}`)
         .then(response => response.json())
-        .then(user => {
-            const sameFriend = user.friends.filter(friend => {
+        .then(currentUser => {
+            const sameFriend = currentUser.friends.filter(friend => {
                 return friend._id == user._id
             })
             // console.log("postUser:", user)
@@ -60,8 +62,9 @@ export default class AllUsers extends Component {
                     )
             } else {
                 // console.log(id)
-                this.state.currentUser.friends.push(user)
+                this.state.currentUser.friends.push(friend)
                 console.log(this.state.currentUser)
+                // debugger
                 fetch(`http://localhost:3000/users/${id}`, {
                     method: "PUT",
                     headers: {
@@ -71,12 +74,12 @@ export default class AllUsers extends Component {
                     body: JSON.stringify(this.state.currentUser)
                     })
                 .then(response => console.log(response))
-                .catch(error => console.log(error))
+                .catch(error => console.log())
             }
         })
         .catch(error => console.log(error))
     }
-
+debugger
   render() {
     return (
         <ScrollView>
