@@ -25,15 +25,13 @@ export default class AllUsers extends Component {
         .catch(error => console.log(error))
     }
 
-    alertAddUser = () => {
-        // console.log("alertaddUser:", user)
-        // debugger
+    alertAddUser = (user) => {
         Alert.alert(
-            "alert",
+            user.name,
             'Add as Friend',
             [
               {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: 'OK', onPress: () => console.log("pressed")},
+              {text: 'OK', onPress: () => this.postFriend(user)},
             ],
             { cancelable: true }
           )
@@ -41,19 +39,19 @@ export default class AllUsers extends Component {
 
     postFriend = (user) => {
         console.log("postuser:", user)
-        this.state.currentUser.friends.push(user)
-        const id = this.state.currentUser._id
-        fetch("http://localhost:3000/users")
+        const id = this.state.currentUser.fbId
+        fetch(`http://localhost:3000/users/${id}`)
         .then(response => response.json())
-        .then(friends => {
-            const sameFriend = friends.filter(friend => {
+        .then(user => {
+            const sameFriend = user.friends.filter(friend => {
                 return friend._id == user._id
             })
-            console.log("postUser:", user)
+            // console.log("postUser:", user)
             console.log("sameFriend:", sameFriend)
             if(sameFriend.length > 0) {
                 Alert.alert(
                     `${user.name} is already your friend`,
+                    "",
                     [
                     {text: "Cancel", style: "cancel"},
                     {text: "OK"},
@@ -61,7 +59,9 @@ export default class AllUsers extends Component {
                     {cancelable: true}
                     )
             } else {
-                debugger
+                // console.log(id)
+                this.state.currentUser.friends.push(user)
+                console.log(this.state.currentUser)
                 fetch(`http://localhost:3000/users/${id}`, {
                     method: "PUT",
                     headers: {
@@ -70,7 +70,7 @@ export default class AllUsers extends Component {
                     },
                     body: JSON.stringify(this.state.currentUser)
                     })
-                .then(response => consol.log(response))
+                .then(response => console.log(response))
                 .catch(error => console.log(error))
             }
         })
