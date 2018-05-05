@@ -25,15 +25,15 @@ export default class AllUsers extends Component {
         .catch(error => console.log(error))
     }
 
-    alertAddUser = (user) => {
+    alertAddUser = () => {
         // console.log("alertaddUser:", user)
         // debugger
         Alert.alert(
-            user.name,
+            "alert",
             'Add as Friend',
             [
               {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: 'OK', onPress: () => this.postFriend(user)},
+              {text: 'OK', onPress: () => console.log("pressed")},
             ],
             { cancelable: true }
           )
