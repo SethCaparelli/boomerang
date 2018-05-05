@@ -101,8 +101,8 @@ class App extends React.Component {
           title="Sign In With Facebook"
           button
           type="facebook"
-          // onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
-          onPress={this._login}
+          onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
+          // onPress={this._login}
           style={{width: 300}}
         />
 

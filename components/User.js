@@ -1,10 +1,11 @@
 import Expo from "expo"
 import React, { Component } from "react"
 import { Platform, Text, View, StyleSheet } from "react-native"
-import { Constants, Location, Permissions, Components } from "expo"
 import { Avatar, Button } from "react-native-elements"
 import mapStyle from "../jsons/mapStyle.json"
-import TabNavigator from 'react-native-tab-navigator'
+import { Constants, MapView, Location, Permissions } from 'expo';
+
+
 
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -13,28 +14,38 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        location: {
-          coords: {
-            latitude: 0,
-            longitude: 0}
-          },
+          mapRegion: null,
+          hasLocationPermissions: false,
+          locationResult: null,
           currentUser: this.props.navigation.state.params.currentUser,
           userPicture: this.props.navigation.state.params.userPicture
       }
     }
-  componentWillMount() {
-    Location.watchPositionAsync(GEOLOCATION_OPTIONS, this.locationChanged)
-  }
+    componentDidMount() {
+      this._getLocationAsync();
+    }
 
-  locationChanged = (location) => {
-    region = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      latitudeDelta: 0.1,
-      longitudeDelta: 0.05,
-    },
-    this.setState({location, region})
-  }
+    _handleMapRegionChange = mapRegion => {
+      console.log(mapRegion);
+      this.setState({ mapRegion });
+    };
+
+    _getLocationAsync = async () => {
+     let { status } = await Permissions.askAsync(Permissions.LOCATION);
+     if (status !== 'granted') {
+       this.setState({
+         locationResult: 'Permission to access location was denied',
+       });
+     } else {
+       this.setState({ hasLocationPermissions: true });
+     }
+
+     let location = await Location.getCurrentPositionAsync({});
+     this.setState({ locationResult: JSON.stringify(location) });
+
+     // Center the map on the location we just fetched.
+      this.setState({mapRegion: { latitude: location.coords.latitude, longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
+    };
 
   render() {
     return (
@@ -49,12 +60,21 @@ export default class App extends Component {
               />
             <Text style={{color: "white", fontSize: 20}}>{this.state.currentUser.name}</Text>
           </View>
-          <Expo.MapView
+          <MapView
             provider={Expo.MapView.PROVIDER_GOOGLE}
             customMapStyle={mapStyle}
             style={styles.map}
+            region={this.state.mapRegion}
+            onRegionChange={this._handleMapRegionChange}
             showsUserLocation={true}
-            region={this.state.region}
+            zoomEnabled={true}
+            pitchEnabled={true}
+            showsUserLocation={true}
+            followsUserLocation={true}
+            // showsCompass={true}
+            // showsBuildings={true}
+            // showsTraffic={true}
+            // showsIndoors={true}
           />
           <View style={styles.buttonContainer}>
             <Button
@@ -104,3 +124,18 @@ const styles = StyleSheet.create({
   }
 
 })
+
+// navigator.geolocation.getCurrentPosition(
+//   ({ coords }) => {
+//     if (this.map) {
+//       this.map.animateToRegion({
+//         latitude: coords.latitude,
+//         longitude: coords.longitude,
+//         latitudeDelta: 0.005,
+//         longitudeDelta: 0.005
+//       })
+//     }
+//   },
+//   (error) => alert('Error: Are location services on?'),
+//   { enableHighAccuracy: true }
+// )
