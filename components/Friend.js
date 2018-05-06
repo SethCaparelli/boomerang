@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native"
+import { View, StyleSheet, TouchableOpacity, Text, Alert } from "react-native"
 import { Avatar } from "react-native-elements"
 import { Icon } from "native-base"
 import renderIf from "../assets/functions/renderIf"
@@ -12,6 +12,16 @@ export default class Friend extends Component {
             friend: this.props.friend,
             infoVisible: false
         }
+    }
+
+    componentDidMount() {
+        const id = this.state.currentUser.fbId
+        fetch(`http://localhost:3000/users/${id}`)
+            .then(response => response.json())
+            .then(user => {
+                this.setState({currentUser: user})
+            })
+            .catch(error => console.log(error))
     }
 
     alertAddUser = (user) => {
@@ -99,25 +109,28 @@ export default class Friend extends Component {
                     activeOpacity={0.7}
                 />
                 <Text>{friend.name}</Text>
+                <Icon type="FontAwesome" name="chevron-right" />
             </TouchableOpacity>
             {renderIf(this.state.infoVisible)(
-            <View style={styles.userInfo}>
-                <View>
-                    <Text>Add Friend</Text>
-                    <Icon name='home' />
-                </View>
-                <View>
-                    <Text>Friends</Text>
-                    {friend.friends.map((user) => {
-                       return(
-                           <View style={styles.user}>
-                            <Text>{user.name}</Text>
-                            {/* <Image source={require("../assets/icons/add_icon.png")}/> */}
-                        </View>
-                       )
-                    })}
-                </View>
-            </View>)}
+                <View style={styles.userInfo}>
+                    <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                        <Text>Add Friend</Text>
+                        <Icon
+                            type="FontAwesome"
+                            name="plus"
+                            onPress={() => this.alertAddUser(friend)}/>
+                    </View>
+                    <View>
+                        <Text>Friends</Text>
+                        {friend.friends.map((user) => {
+                        return(
+                            <View style={styles.user}>
+                                <Text>{user.name}</Text>
+                            </View>
+                        )
+                        })}
+                    </View>
+                </View>)}
         </View>
 
     )

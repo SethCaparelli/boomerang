@@ -21,12 +21,19 @@ export default class App extends Component {
           userPicture: this.props.navigation.state.params.userPicture
       }
     }
+
     componentDidMount() {
-      this._getLocationAsync();
+      const id = this.state.currentUser.fbId
+      this._getLocationAsync()
+      fetch(`http://localhost:3000/users/${id}`)
+        .then(response => response.json())
+        .then(user => {
+            this.setState({currentUser: user})
+        })
+        .catch(error => console.log(error))
     }
 
     _handleMapRegionChange = mapRegion => {
-      console.log(mapRegion);
       this.setState({ mapRegion });
     };
 
@@ -43,7 +50,6 @@ export default class App extends Component {
      let location = await Location.getCurrentPositionAsync({});
      this.setState({ locationResult: JSON.stringify(location) });
 
-     // Center the map on the location we just fetched.
       this.setState({mapRegion: { latitude: location.coords.latitude, longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
     };
 
@@ -71,10 +77,6 @@ export default class App extends Component {
             pitchEnabled={true}
             showsUserLocation={true}
             followsUserLocation={true}
-            // showsCompass={true}
-            // showsBuildings={true}
-            // showsTraffic={true}
-            // showsIndoors={true}
           />
           <View style={styles.buttonContainer}>
             <Button

@@ -18,11 +18,11 @@ export default class AllUsers extends Component {
 
     componentDidMount() {
         fetch("http://localhost:3000/users")
-        .then(response => response.json())
-        .then(users => {
-            this.setState({users})
-        })
-        .catch(error => console.log(error))
+            .then(response => response.json())
+            .then(users => {
+                this.setState({users})
+            })
+            .catch(error => console.log(error))
     }
 
   render() {
@@ -32,7 +32,9 @@ export default class AllUsers extends Component {
                 {
                     this.state.users.map((user) => {
                         return (
-                            <Friend friend={user}/>
+                            <Friend
+                                friend={user}
+                                currentUser={this.state.currentUser}/>
                         )
                     })
                 }
