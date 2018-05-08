@@ -114,6 +114,14 @@ export default class User extends Component {
                 />
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Boomerangs", {currentUser: this.state.currentUser})}
+              >
+              <Image
+                source={require("../assets/icons/boomerang_boomerang_icon.png")}
+                style={styles.icon}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity
               onPress={() => this.props.navigation.navigate("UsersFriends", {currentUser: this.state.currentUser})}
               >
               <Image

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Avatar } from "react-native-elements"
 import { Icon } from "native-base"
-import Spot from "./Spot"
+import FriendSpot from "./FriendSpot"
 import renderIf from "../assets/functions/renderIf"
 
 export default class Friend extends Component {
@@ -68,15 +68,20 @@ export default class Friend extends Component {
                 </TouchableOpacity>
                 {renderIf(this.state.infoVisible)(
                 <View style={styles.userInfo}>
-                    <View style={{flexDirection: "row", justifyContent: "space-between",  alignItems: "center"}}>
-                        <Text style={{fontSize: 20, fontWeight: 0.62}}>Send Boomerang</Text>
-                        <TouchableOpacity >
-                            <Icon
-                                type="FontAwesome"
-                                name="plus"
-                                onPress={() => this.getFriend(friend, )}
-                            />
-                        </TouchableOpacity>
+                    <View>
+                        <View style={{flexDirection: "row", alignItems: "center", borderBottomWidth: 1}}>
+                            <Icon type="FontAwesome" name="map-marker" />
+                            <Text style={{fontWeight: 0.62}}>Spots</Text>
+                        </View>
+                        {friend.spots.map((spot, i) => {
+                            return (
+                                <FriendSpot
+                                    friend={this.state.friend}
+                                    key={i}
+                                    spot={spot}
+                                    currentUser={this.state.currentUser}/>
+                                )
+                        })}
                     </View>
                     <View style={{marginBottom: 6}}>
                         <View style={{flexDirection: "row", alignItems: "center", borderBottomWidth: 1, marginBottom: 3}}>
@@ -93,18 +98,7 @@ export default class Friend extends Component {
                         })}
                         </View>
                     </View>
-                    <View>
-                        <View style={{flexDirection: "row", alignItems: "center", borderBottomWidth: 1}}>
-                            <Icon type="FontAwesome" name="map-marker" />
-                            <Text style={{fontWeight: 0.62}}>Spots</Text>
-                        </View>
-                        {friend.spots.map((spot, i) => {
-                            return (
-                                <Spot key={i} spot={spot} />
-                                )
-                        })}
-                    </View>
-                    <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+                    <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 30}}>
                         <Text>Remove Friend</Text>
                         <TouchableOpacity
                             onPress={() => this.removeFriend(friend)}>
@@ -140,4 +134,8 @@ const styles = StyleSheet.create({
         marginBottom: 3,
         backgroundColor: "white"
    },
+   userInfo: {
+       marginBottom: 30,
+       flex: 1
+   }
 })

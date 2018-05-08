@@ -5,6 +5,7 @@ import User from "./components/User"
 import People from "./components/People"
 import AllSpots from "./components/AllSpots"
 import Friends from "./components/Friends"
+import Boomerangs from "./components/Boomerangs"
 import { SocialIcon, Avatar } from "react-native-elements"
 import {YellowBox} from 'react-native'
 console.disableYellowBox = true
@@ -110,8 +111,8 @@ class App extends React.Component {
           title="Sign In With Facebook"
           button
           type="facebook"
-          // onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
-          onPress={this._login}
+          onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
+          // onPress={this._login}
           style={{width: 300}}
         />
 
@@ -135,6 +136,9 @@ export default StackNavigator ({
   },
   AllSpots: {
     screen: AllSpots
+  },
+  Boomerangs: {
+    screen: Boomerangs
   }
 })
 
@@ -148,6 +152,13 @@ const styles = StyleSheet.create({
   logo: {
     height: 200,
     width: 200,
+  },
+  back: {
+    backgroundColor: "#6DAEDB",
+    color: "#2892D7",
+    color: "#1B4353",
+    color: "#1D70A2",
+    color: "#173753"
   }
 })
 

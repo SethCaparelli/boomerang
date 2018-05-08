@@ -18,11 +18,11 @@ export default class Friends extends Component {
     componentDidMount() {
         const id = this.state.currentUser.fbId
         fetch(`http://localhost:3000/users/${id}`)
-            .then(response => response.json())
-            .then(user => {
-                this.setState({currentUser: user})
-            })
-            .catch(error => console.log(error))
+        .then(response => response.json())
+        .then(user => {
+            this.setState({currentUser: user})
+        })
+        .catch(error => console.log(error))
     }
 
     render() {
