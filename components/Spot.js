@@ -33,9 +33,10 @@ export default class Spot extends Component {
         const sameSpots = this.state.currentUser.spots.filter(place => {
             return place.name == spot.name
         })
+        console.log(sameSpots)
         if(sameSpots.length > 0) {
             Alert.alert(
-                `${spot} is already your spot`,
+                `${spot.name} is already your spot`,
                 "",
                 [
                 {text: "OK"},
@@ -43,10 +44,7 @@ export default class Spot extends Component {
                 {cancelable: false}
             )
         } else {
-            console.log(sameSpots)
             this.state.currentUser.spots.push(spot)
-            console.log(this.state.currentUser)
-
             fetch(`http://localhost:3000/users/${id}`, {
                 method: "PUT",
                 headers: {
@@ -55,32 +53,36 @@ export default class Spot extends Component {
                 },
                 body: JSON.stringify(this.state.currentUser)
                 })
-                .then(response => console.log(response))
-                // .then(user => {
-                //     if(user.name) {
-                //         Alert.alert(
-                //             "Success",
-                //             `${this.props.spot.name} is now your spot`,
-                //             [
-                //             {text: "OK"},
-                //             ],
-                //             {cancelable: false}
-                //         )
-                //         this.setState({
-                //             currentUser: user
-                //         })
-                //     } else {
-                //         Alert.alert(
-                //             "Sorry",
-                //             `${this.props.spot.name} could not be added`,
-                //             [
-                //             {text: "OK"},
-                //             ],
-                //             {cancelable: false}
-                //         )
-                //     }
-                // })
-                // .catch(error => console.log(error))
+                .then(response => {
+                    if(response.status == 200) {
+                        Alert.alert(
+                            "Success",
+                            `${this.props.spot.name} is now your spot`,
+                            [
+                            {text: "OK"},
+                            ],
+                            {cancelable: false}
+                        )
+                        this.setState({
+                            currentUser: user
+                        })
+                    } else {
+                        Alert.alert(
+                            "Sorry",
+                            `${this.props.spot.name} could not be added`,
+                            [
+                            {text: "OK"},
+                            ],
+                            {cancelable: false}
+                        )
+                    }
+                })
+                .then(user => {
+                    this.setState({
+                        currentUser: user
+                    })
+                })
+                .catch(error => console.log(error))
         }
     }
 
@@ -100,12 +102,12 @@ export default class Spot extends Component {
                     <Icon style={{marginLeft: "auto"}} type="FontAwesome" name="chevron-right" />
                 </TouchableOpacity>
                 {renderIf(this.state.infoVisible)(
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.addSpot(this.props.spot)}>
                         <Text>Add Spot</Text>
                         <Icon
                             type="FontAwesome"
-                            name="plus"
-                            onPress={() => this.addSpot(this.props.spot)}/>
+                            name="plus"/>
                     </TouchableOpacity>
                 )}
            </View>
