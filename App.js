@@ -2,9 +2,9 @@ import React from "react"
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from "react-native"
 import { StackNavigator } from "react-navigation"
 import User from "./components/User"
-import AllUsers from "./components/AllUsers"
+import People from "./components/People"
 import AllSpots from "./components/AllSpots"
-import UsersFriends from "./components/UsersFriends"
+import Friends from "./components/Friends"
 import { SocialIcon, Avatar } from "react-native-elements"
 import {YellowBox} from 'react-native'
 console.disableYellowBox = true
@@ -128,10 +128,10 @@ export default StackNavigator ({
     screen: User
   },
   UsersFriends: {
-    screen: UsersFriends
+    screen: Friends
   },
   AllUsers: {
-    screen: AllUsers
+    screen: People
   },
   AllSpots: {
     screen: AllSpots

@@ -1,13 +1,13 @@
 import Expo from "expo"
 import React, { Component } from "react"
-import { Platform, Text, View, StyleSheet, Image, TouchableOpacity } from "react-native"
+import { Platform, Text, View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native"
 import { Avatar, Button } from "react-native-elements"
 import mapStyle from "../jsons/mapStyle.json"
 import { Constants, MapView, Location, Permissions } from 'expo';
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 
-export default class App extends Component {
+export default class User extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -18,6 +18,16 @@ export default class App extends Component {
           userPicture: this.props.navigation.state.params.userPicture
       }
     }
+
+    componentWillUnmount() {
+      Alert.alert('COMPONENT WILL UNMOUNT')
+    }
+
+    // componentWillReceiveProps(nextProps) {
+    //   if(this.props.percent !== nextProps) {
+    //     this.setState({nextProps})
+    //   }
+    // }
 
     componentDidMount() {
       const id = this.state.currentUser.fbId
@@ -32,7 +42,7 @@ export default class App extends Component {
 
     _handleMapRegionChange = mapRegion => {
       this.setState({ mapRegion });
-    };
+    }
 
     _getLocationAsync = async () => {
      let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -54,6 +64,7 @@ export default class App extends Component {
         longitudeDelta: 0.0421
       }})
     }
+
 
   render() {
     return (

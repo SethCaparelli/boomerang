@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, TouchableOpacity, Text, Alert } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Avatar } from "react-native-elements"
 import { Icon } from "native-base"
+import Spot from "./Spot"
 import renderIf from "../assets/functions/renderIf"
 
 export default class Friend extends Component {
     constructor(props) {
         super(props)
-        this.state ={
+        this.state = {
             currentUser: this.props.currentUser,
             friend: this.props.friend,
             infoVisible: false
@@ -24,106 +25,58 @@ export default class Friend extends Component {
             .catch(error => console.log(error))
     }
 
-    alertAddUser = (user) => {
-        Alert.alert(
-            user.name,
-            'Add as Friend',
-            [
-              {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: 'OK', onPress: () => this.postFriend(user)},
-            ],
-            { cancelable: true }
-          )
-    }
-
-    postFriend = (user) => {
-        const friend = user
-        const id = this.state.currentUser.fbId
-        fetch(`http://localhost:3000/users/${id}`)
-            .then(response => response.json())
-            .then(currentUser => {
-                const sameFriend = currentUser.friends.filter(friend => {
-                    return friend._id == user._id
-                })
-                // console.log("postUser:", user)
-                console.log("sameFriend:", sameFriend)
-                if(sameFriend.length > 0) {
-                    Alert.alert(
-                        `${user.name} is already your friend`,
-                        "",
-                        [
-                        {text: "Cancel", style: "cancel"},
-                        {text: "OK"},
-                        ],
-                        {cancelable: true}
-                        )
-                } else {
-                    this.state.currentUser.friends.push(friend)
-                    fetch(`http://localhost:3000/users/${id}`, {
-                        method: "PUT",
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(this.state.currentUser)
-                        })
-                        .then(response => response.json())
-                        .then(user => {
-                            this.setState({
-                                currentUser: user
-                            })
-                            Alert.alert(
-                                "Success",
-                                `${friend.name} is now your friend`,
-                                [
-                                {text: "OK"},
-                                ],
-                                {cancelable: false}
-                            )
-                            fetch("http://localhost:3000/users")
-                                .then(response => response.json())
-                                .then(users => {
-                                    this.setState({users})
-                                })
-                                .catch(error => console.log(error))
-                        })
-                        .catch(error => console.log())
-                }
-            })
-            .catch(error => console.log(error))
-    }
-
     toggleInfo = () => {
         this.setState({infoVisible: !this.state.infoVisible})
     }
 
-  render() {
-      const friend = this.state.friend
-    return (
-        <View>
-            <TouchableOpacity
-                style={styles.card}
-                key={friend._id}
-                onPress={() => this.toggleInfo()}
-                >
-                <Avatar
-                    large
-                    rounded
-                    source={{uri: friend.picture.data.url}}
-                    onPress={() => console.log("Works!")}
-                    activeOpacity={0.7}
-                />
-                <Text>{friend.name}</Text>
-                <Icon style={{marginLeft: "auto"}} type="FontAwesome" name="chevron-right" />
-            </TouchableOpacity>
-            {renderIf(this.state.infoVisible)(
+    removeFriend = (friend) => {
+        console.log(friend)
+        console.log(this.state.currentUser.friends)
+        let friendIndex = this.state.currentUser.friends.indexOf(friend._id)
+        console.log(friendIndex)
+    }
+
+    getFriend = (friend, boomerang) => {
+        console.log(friend)
+        fetch(`http://localhost:3000/users/${friend.fbId}`)
+        .then((response) => response.json())
+        .then(user => this.sendBoomerang(user, boomerang))
+        .catch(error => console.log(error))
+      }
+
+    sendBoomerang = (friend, boomerang) => {
+        console.log(friend, boomerang)
+    }
+
+    render() {
+        const friend = this.state.friend
+        return (
+            <View>
+                <TouchableOpacity
+                    style={styles.card}
+                    onPress={() => this.toggleInfo()}
+                    >
+                    <Avatar
+                        large
+                        rounded
+                        source={{uri: friend.picture.data.url}}
+                        onPress={() => console.log("Works!")}
+                        activeOpacity={0.7}
+                    />
+                    <Text>{friend.name}</Text>
+                    <Icon style={{marginLeft: "auto"}}type="FontAwesome" name="chevron-right" />
+                </TouchableOpacity>
+                {renderIf(this.state.infoVisible)(
                 <View style={styles.userInfo}>
                     <View style={{flexDirection: "row", justifyContent: "space-between",  alignItems: "center"}}>
-                        <Text style={{fontSize: 20, fontWeight: 0.62}}>Add Friend</Text>
-                        <Icon
-                            type="FontAwesome"
-                            name="plus"
-                            onPress={() => this.alertAddUser(friend)}/>
+                        <Text style={{fontSize: 20, fontWeight: 0.62}}>Send Boomerang</Text>
+                        <TouchableOpacity >
+                            <Icon
+                                type="FontAwesome"
+                                name="plus"
+                                onPress={() => this.getFriend(friend, )}
+                            />
+                        </TouchableOpacity>
                     </View>
                     <View style={{marginBottom: 6}}>
                         <View style={{flexDirection: "row", alignItems: "center", borderBottomWidth: 1, marginBottom: 3}}>
@@ -131,12 +84,12 @@ export default class Friend extends Component {
                             <Text style={{fontWeight: 0.62, fontStyle: "underlined"}}>Friends</Text>
                         </View>
                         <View>
-                        {friend.friends.map((user, i) => {
-                        return(
-                            <View key={i} style={styles.user}>
-                                <Text key={i}>{user.name}</Text>
-                            </View>
-                        )
+                        {friend.friends.map(user => {
+                            return(
+                                <View key={user._id} style={styles.user}>
+                                    <Text key={user._id}>{user.name}</Text>
+                                </View>
+                            )
                         })}
                         </View>
                     </View>
@@ -146,16 +99,25 @@ export default class Friend extends Component {
                             <Text style={{fontWeight: 0.62}}>Spots</Text>
                         </View>
                         {friend.spots.map((spot, i) => {
-                            <View key={i}>
-                                <Text>{spot.name}</Text>
-                            </View>
+                            return (
+                                <Spot key={i} spot={spot} />
+                                )
                         })}
                     </View>
+                    <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+                        <Text>Remove Friend</Text>
+                        <TouchableOpacity
+                            onPress={() => this.removeFriend(friend)}>
+                            <Icon
+                                type="FontAwesome"
+                                name="minus"
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>)}
-        </View>
-
-    )
-  }
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({

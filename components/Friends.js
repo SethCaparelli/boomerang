@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View } from "react-native"
-import UsersFriend from "./UsersFriend"
 import Friend from "./Friend"
 import { Icon } from "native-base"
 
-export default class UsersFriends extends Component {
+export default class Friends extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -41,7 +40,7 @@ export default class UsersFriends extends Component {
                 {
                 this.state.currentUser.friends.map((friend, i) => {
                     return (
-                        <UsersFriend
+                        <Friend
                             currentUser={this.state.currentUser}
                             friend={friend}
                             key={i}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from "react-native"
+import { View, Text, ScrollView } from "react-native"
 import Spot from "./Spot"
 
 export default class AllSpots extends Component {
@@ -28,7 +28,7 @@ export default class AllSpots extends Component {
     }
     render() {
         return (
-            <View>
+            <ScrollView>
             {this.state.spots.map((spot, i) => {
                 return (
                     <Spot
@@ -39,7 +39,7 @@ export default class AllSpots extends Component {
                 )
             })
             }
-            </View>
+            </ScrollView>
         )
     }
 }

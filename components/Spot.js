@@ -104,7 +104,7 @@ export default class Spot extends Component {
                 {renderIf(this.state.infoVisible)(
                     <View>
                         <TouchableOpacity
-                            style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}
+                            style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: 1}}
                             onPress={() => this.addSpot(this.props.spot)}>
                             <Text>Add Spot</Text>
                             <Icon

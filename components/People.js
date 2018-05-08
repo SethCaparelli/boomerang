@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { View, Text, StyleSheet, Image, ScrollView, Alert, TouchableOpacity } from "react-native"
 import { ListItem, Avatar, SearchBar } from "react-native-elements"
-import Friend from "./Friend"
+import Person from "./Person"
 
-export default class AllUsers extends Component {
+export default class People extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -22,7 +22,7 @@ export default class AllUsers extends Component {
             .then(response => response.json())
             .then(users => {
                 this.setState({users})
-                return fetch(`http://localhost:3000/users/${id}`)
+                fetch(`http://localhost:3000/users/${id}`)
                     .then(response => response.json())
                     .then(user => {
                         this.setState({currentUser: user})
@@ -54,7 +54,7 @@ export default class AllUsers extends Component {
             {
                 this.state.users.map((user) => {
                     return (
-                        <Friend
+                        <Person
                             key={user._id}
                             friend={user}
                             currentUser={this.state.currentUser}/>
