@@ -21,13 +21,16 @@ export default class People extends Component {
         fetch("http://localhost:3000/users")
             .then(response => response.json())
             .then(users => {
-                this.setState({users})
-                fetch(`http://localhost:3000/users/${id}`)
-                    .then(response => response.json())
-                    .then(user => {
-                        this.setState({currentUser: user})
-                    })
-                    .catch(error => console.log(error))
+                this.setState({
+                    users: users
+                })
+                console.log("users:", this.state.users)
+                // fetch(`http://localhost:3000/users/${id}`)
+                //     .then(response => response.json())
+                //     .then(user => {
+                //         this.setState({currentUser: user})
+                //     })
+                //     .catch(error => console.log(error))
             })
             .catch(error => console.log(error))
     }
@@ -44,6 +47,8 @@ export default class People extends Component {
     }
 
   render() {
+      console.log("renderState:", this.state.users)
+    //   debugger
     return (
         <View style={styles.container}>
             <SearchBar
@@ -52,7 +57,7 @@ export default class People extends Component {
                 placeholder='Type Here...' />
             <ScrollView>
             {
-                this.state.users.map((user) => {
+                this.state.users.map(user => {
                     return (
                         <Person
                             key={user._id}

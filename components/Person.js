@@ -118,13 +118,15 @@ export default class Friend extends Component {
             </TouchableOpacity>
             {renderIf(this.state.infoVisible)(
                 <View style={styles.userInfo}>
-                    <View style={{flexDirection: "row", justifyContent: "space-between",  alignItems: "center"}}>
+                    <TouchableOpacity
+                        onPress={() => this.alertAddUser(friend)}
+                        style={{flexDirection: "row", justifyContent: "space-between",  alignItems: "center"}}>
                         <Text style={{fontSize: 20, fontWeight: 0.62}}>Add Friend</Text>
                         <Icon
                             type="FontAwesome"
                             name="plus"
-                            onPress={() => this.alertAddUser(friend)}/>
-                    </View>
+                            />
+                    </TouchableOpacity>
                     <View style={{marginBottom: 6}}>
                         <View style={{flexDirection: "row", alignItems: "center", borderBottomWidth: 1, marginBottom: 3}}>
                             <Icon type="Ionicons" name="people"/>

@@ -112,6 +112,7 @@ export default class FriendSpot extends Component {
     }
 
     sendBoomerang = (friend) => {
+        console.log(friend)
         const id = friend.fbId
         fetch(`http://localhost:3000/users/${id}`, {
             method: "PUT",

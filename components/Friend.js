@@ -30,19 +30,65 @@ export default class Friend extends Component {
     }
 
     removeFriend = (friend) => {
-        console.log(friend)
-        console.log(this.state.currentUser.friends)
-        let friendIndex = this.state.currentUser.friends.indexOf(friend._id)
-        console.log(friendIndex)
+        console.log("currentUser:", this.state.currentUser)
+        const id = this.state.currentUser.fbId
+        console.log("friend:", friend)
+        console.log("Friend Array:", this.state.currentUser.friends)
+        const newFriends = this.state.currentUser.friends.filter(user => user._id !== friend._id)
+        const currentUser = this.state.currentUser
+        currentUser.friends = newFriends
+        this.setState({
+            currentUser
+        })
+        console.log("newCurrentUser:", this.state.currentUser)
+        console.log("NewArray:", newFriends)
+        fetch(`http://localhost:3000/users/${id}`, {
+            method: "PUT",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(this.state.currentUser)
+                })
+                .then(response => {
+                    if(response.status == 200) {
+                        Alert.alert(
+                            "Success",
+                            "Friend Removed",
+                            [
+                            {text: "OK"},
+                            ],
+                            {cancelable: false}
+                        )
+                        this.setState({
+                            currentUser: user
+                        })
+                    } else {
+                        Alert.alert(
+                            "Sorry",
+                            `${friend.name} could not be removed`,
+                            [
+                            {text: "OK"},
+                            ],
+                            {cancelable: false}
+                        )
+                    }
+                })
+                .then(user => {
+                    this.setState({
+                        currentUser: user
+                    })
+                })
+                .catch(error => console.log(error))
     }
 
-    getFriend = (friend, boomerang) => {
-        console.log(friend)
-        fetch(`http://localhost:3000/users/${friend.fbId}`)
-        .then((response) => response.json())
-        .then(user => this.sendBoomerang(user, boomerang))
-        .catch(error => console.log(error))
-      }
+    // getFriend = (friend, boomerang) => {
+    //     console.log("Friend:", friend)
+    //     fetch(`http://localhost:3000/users/${friend.fbId}`)
+    //     .then((response) => response.json())
+    //     .then(user => this.sendBoomerang(user, boomerang))
+    //     .catch(error => console.log(error))
+    //   }
 
     sendBoomerang = (friend, boomerang) => {
         console.log(friend, boomerang)

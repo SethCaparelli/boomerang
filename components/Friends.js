@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View } from "react-native"
+import { ScrollView, Text, View, Alert } from "react-native"
 import Friend from "./Friend"
 import { Icon } from "native-base"
 
@@ -25,6 +25,11 @@ export default class Friends extends Component {
         .catch(error => console.log(error))
     }
 
+    componentWillUnmount() {
+        Alert.alert('COMPONENT WILL UNMOUNT')
+      }
+
+
     render() {
         return (
             <View>
@@ -44,7 +49,7 @@ export default class Friends extends Component {
                             currentUser={this.state.currentUser}
                             friend={friend}
                             key={i}
-                            />
+                        />
                     )
                 })}
                 </ScrollView>

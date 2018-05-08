@@ -23,6 +23,17 @@ export default class User extends Component {
       Alert.alert('COMPONENT WILL UNMOUNT')
     }
 
+    componentWillFocus() {
+      const id = this.state.currentUser.fbId
+      this._getLocationAsync()
+      fetch(`http://localhost:3000/users/${id}`)
+        .then(response => response.json())
+        .then(user => {
+            this.setState({currentUser: user})
+        })
+        .catch(error => console.log(error))
+    }
+
     // componentWillReceiveProps(nextProps) {
     //   if(this.props.percent !== nextProps) {
     //     this.setState({nextProps})

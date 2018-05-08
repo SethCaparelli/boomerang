@@ -9,7 +9,7 @@ export default class Spot extends Component {
         super(props)
         this.state = {
             currentUser: this.props.currentUser,
-            infoVisble: false
+            infoVisible: false
         }
     }
 

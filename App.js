@@ -36,7 +36,7 @@ class App extends React.Component {
   }
 
   static navigationOptions = {
-    title: "Home"
+    title: "Sign Out"
   }
 
   _login = () => {
@@ -100,6 +100,7 @@ class App extends React.Component {
   }
 
   render() {
+
     return (
       <View style={styles.container}>
         <Image
