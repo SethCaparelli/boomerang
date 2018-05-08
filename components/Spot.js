@@ -102,13 +102,19 @@ export default class Spot extends Component {
                     <Icon style={{marginLeft: "auto"}} type="FontAwesome" name="chevron-right" />
                 </TouchableOpacity>
                 {renderIf(this.state.infoVisible)(
-                    <TouchableOpacity
-                        onPress={() => this.addSpot(this.props.spot)}>
-                        <Text>Add Spot</Text>
-                        <Icon
-                            type="FontAwesome"
-                            name="plus"/>
-                    </TouchableOpacity>
+                    <View>
+                        <TouchableOpacity
+                            style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}
+                            onPress={() => this.addSpot(this.props.spot)}>
+                            <Text>Add Spot</Text>
+                            <Icon
+                                type="FontAwesome"
+                                name="plus"/>
+                        </TouchableOpacity>
+                        <View>
+                            <Text>{this.props.spot.address}</Text>
+                        </View>
+                    </View>
                 )}
            </View>
         )

@@ -80,6 +80,15 @@ export default class App extends Component {
             showsUserLocation={true}
             followsUserLocation={true}
           >
+          {this.state.currentUser.spots.map((spot, i) => {
+            return(
+              <MapView.Marker
+                coordinate={spot.location}
+                title={spot.name}
+                description={spot.address}
+              />
+            )
+          })}
           </MapView>
           <View style={styles.buttonContainer}>
             {/* <Icon
