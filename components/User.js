@@ -1,12 +1,9 @@
 import Expo from "expo"
 import React, { Component } from "react"
-import { Platform, Text, View, StyleSheet } from "react-native"
+import { Platform, Text, View, StyleSheet, Image, TouchableOpacity } from "react-native"
 import { Avatar, Button } from "react-native-elements"
 import mapStyle from "../jsons/mapStyle.json"
 import { Constants, MapView, Location, Permissions } from 'expo';
-
-
-
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 
@@ -44,14 +41,19 @@ export default class App extends Component {
          locationResult: 'Permission to access location was denied',
        });
      } else {
-       this.setState({ hasLocationPermissions: true });
+       this.setState({ hasLocationPermissions: true })
      }
 
-     let location = await Location.getCurrentPositionAsync({});
-     this.setState({ locationResult: JSON.stringify(location) });
+     let location = await Location.getCurrentPositionAsync({})
+     this.setState({ locationResult: JSON.stringify(location) })
 
-      this.setState({mapRegion: { latitude: location.coords.latitude, longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
-    };
+      this.setState({mapRegion: {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
+      }})
+    }
 
   render() {
     return (
@@ -64,7 +66,7 @@ export default class App extends Component {
                 onPress={() => console.log("Works!")}
                 activeOpacity={0.7}
               />
-            <Text style={{color: "white", fontSize: 20}}>{this.state.currentUser.name}</Text>
+            <Text style={{color: "white", fontSize: 20, backgroundColor: "#173753", borderRadius: 30, width: 150, textAlign: "center"}}>{this.state.currentUser.name}</Text>
           </View>
           <MapView
             provider={Expo.MapView.PROVIDER_GOOGLE}
@@ -77,20 +79,28 @@ export default class App extends Component {
             pitchEnabled={true}
             showsUserLocation={true}
             followsUserLocation={true}
-          />
+          >
+          </MapView>
           <View style={styles.buttonContainer}>
-            <Button
-              title="Boomerangers"
-              onPress={() => this.props.navigation.navigate("AllUsers", {currentUser: this.state.currentUser})}
-              buttonStyle={{
-                backgroundColor: "rgba(92, 99,216, 1)",
-                width: 300,
-                height: 45,
-                borderColor: "transparent",
-                borderWidth: 0,
-                borderRadius: 5
-              }}
-            />
+            {/* <Icon
+              type="Ionicons"
+              name="people" /> */}
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("AllSpots", {currentUser: this.state.currentUser})}
+              >
+              <Image
+                source={require("../assets/icons/boomerang_cocktail_icon.png")}
+                style={styles.icon}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("UsersFriends", {currentUser: this.state.currentUser})}
+              >
+              <Image
+                source={require("../assets/icons/boomerang_user_icon.png")}
+                style={styles.icon}
+                />
+            </TouchableOpacity>
           </View>
         </View>
     )
@@ -104,9 +114,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   buttonContainer: {
-    flex: 0.1,
-    backgroundColor: "black",
-    width: "100%"
+    flex: 0.12,
+    backgroundColor: "#1B4353",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center"
   },
   avatarContainer: {
     flex: 0.15,
@@ -123,21 +136,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0
+  },
+  icon: {
+    width: 35,
+    height: 35,
   }
-
 })
-
-// navigator.geolocation.getCurrentPosition(
-//   ({ coords }) => {
-//     if (this.map) {
-//       this.map.animateToRegion({
-//         latitude: coords.latitude,
-//         longitude: coords.longitude,
-//         latitudeDelta: 0.005,
-//         longitudeDelta: 0.005
-//       })
-//     }
-//   },
-//   (error) => alert('Error: Are location services on?'),
-//   { enableHighAccuracy: true }
-// )

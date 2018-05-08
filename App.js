@@ -3,7 +3,11 @@ import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from "react-na
 import { StackNavigator } from "react-navigation"
 import User from "./components/User"
 import AllUsers from "./components/AllUsers"
+import AllSpots from "./components/AllSpots"
+import UsersFriends from "./components/UsersFriends"
 import { SocialIcon, Avatar } from "react-native-elements"
+import {YellowBox} from 'react-native'
+console.disableYellowBox = true
 
 
 class App extends React.Component {
@@ -97,12 +101,17 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Image
+          style={styles.logo}
+          source={require("./assets/icons/boomerang_logo.png")}
+        />
+        <Text style={{fontSize: 50, fontWeight: 0.62, color: "white",  marginBottom: 100}}>Boomerang</Text>
         <SocialIcon
           title="Sign In With Facebook"
           button
           type="facebook"
-          onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
-          // onPress={this._login}
+          // onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
+          onPress={this._login}
           style={{width: 300}}
         />
 
@@ -118,16 +127,32 @@ export default StackNavigator ({
   User: {
     screen: User
   },
+  UsersFriends: {
+    screen: UsersFriends
+  },
   AllUsers: {
     screen: AllUsers
+  },
+  AllSpots: {
+    screen: AllSpots
   }
 })
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#1B4353",
     alignItems: "center",
     justifyContent: "center",
   },
+  logo: {
+    height: 200,
+    width: 200,
+  }
 })
+
+// 173753
+// 6DAEDB
+// 2892D7
+// 1B4353
+// 1D70A2

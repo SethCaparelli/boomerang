@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { View, Text, StyleSheet, Image, ScrollView, Alert, TouchableOpacity } from "react-native"
-import { ListItem, Avatar } from "react-native-elements"
+import { ListItem, Avatar, SearchBar } from "react-native-elements"
 import Friend from "./Friend"
 
 export default class AllUsers extends Component {
@@ -17,29 +17,52 @@ export default class AllUsers extends Component {
       }
 
     componentDidMount() {
+        const id = this.state.currentUser.fbId
         fetch("http://localhost:3000/users")
             .then(response => response.json())
             .then(users => {
                 this.setState({users})
+                return fetch(`http://localhost:3000/users/${id}`)
+                    .then(response => response.json())
+                    .then(user => {
+                        this.setState({currentUser: user})
+                    })
+                    .catch(error => console.log(error))
             })
             .catch(error => console.log(error))
     }
 
+    searchUsers = (term) => {
+        console.log(term)
+        let searchedUsers = this.state.users.filter(user => {
+            return user.name == String(term)
+        })
+        console.log(searchedUsers)
+        this.setState({
+            users: searchedUsers
+        })
+    }
+
   render() {
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                {
-                    this.state.users.map((user) => {
-                        return (
-                            <Friend
-                                friend={user}
-                                currentUser={this.state.currentUser}/>
-                        )
-                    })
-                }
-            </View>
-      </ScrollView>
+        <View style={styles.container}>
+            <SearchBar
+                onChangeText={(term) => this.searchUsers(term)}
+                // onClear={someMethod}
+                placeholder='Type Here...' />
+            <ScrollView>
+            {
+                this.state.users.map((user) => {
+                    return (
+                        <Friend
+                            key={user._id}
+                            friend={user}
+                            currentUser={this.state.currentUser}/>
+                    )
+                })
+            }
+            </ScrollView>
+        </View>
     )
   }
 }
@@ -51,15 +74,4 @@ const styles = StyleSheet.create({
         // alignItems: "center",
         backgroundColor: "white"
     },
-    card: {
-        justifyContent: "flex-start",
-        alignItems: "center",
-        flexDirection: "row",
-        borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: "black",
-        marginTop: 1,
-        marginBottom: 1,
-        backgroundColor: "white"
-   }
 })
