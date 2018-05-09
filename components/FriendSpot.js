@@ -95,7 +95,11 @@ export default class FriendSpot extends Component {
     }
 
     addBoomerang = (friend, drink) => {
-        const user = this.state.currentUser
+        const user = {
+            name: this.state.currentUser.name,
+            picture: this.state.currentUser.picture.data.url,
+            spots: this.state.currentUser.spots
+        }
         const spot = this.props.spot
         const boomerang = {
             drink,
@@ -122,6 +126,7 @@ export default class FriendSpot extends Component {
             body: JSON.stringify(friend)
         })
         .then(response => {
+            this.props.toggleModal()
             if(response.status == 200) {
                 Alert.alert(
                     "Success",

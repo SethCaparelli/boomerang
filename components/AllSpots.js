@@ -32,7 +32,7 @@ export default class AllSpots extends Component {
     render() {
         return (
             <View
-                style={{flex: 1}}>
+                style={{flex: 1, backgroundColor: "#1B4353"}}>
                  <SearchBar
                     onChangeText={(term) => this.searchUsers(term)}
                     // onClear={someMethod}

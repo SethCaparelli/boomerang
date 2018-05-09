@@ -114,6 +114,7 @@ export default class Friend extends Component {
                         {friend.spots.map((spot, i) => {
                             return (
                                 <FriendSpot
+                                    toggleModal={this.props.toggleModal}
                                     friend={this.state.friend}
                                     key={i}
                                     spot={spot}

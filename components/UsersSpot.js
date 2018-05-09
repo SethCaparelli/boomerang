@@ -107,8 +107,13 @@ export default class UsersSpot extends Component {
                     <Icon style={{marginLeft: "auto"}} type="FontAwesome" name="chevron-right" />
                 </TouchableOpacity>
                 {renderIf(this.state.infoVisible)(
-                    <View>
-                        <Text>{this.props.spot.address}</Text>
+                    <View
+                        style={styles.address}>
+                        <Icon
+                            style={{color: "#6DAEDB"}}
+                            type="FontAwesome"
+                            name="map-marker"/>
+                        <Text style={{color: "white", marginLeft: 5}}>{this.props.spot.address}</Text>
                     </View>
                 )}
            </View>
@@ -129,4 +134,10 @@ const styles = StyleSheet.create({
         width: "100%",
         marginBottom: 10
     },
+    address: {
+        flexDirection: "row",
+        marginBottom: 6,
+        alignItems: "center",
+        borderBottomWidth: 1
+    }
 })

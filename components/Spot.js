@@ -102,15 +102,21 @@ export default class Spot extends Component {
                 {renderIf(this.state.infoVisible)(
                     <View>
                         <TouchableOpacity
-                            style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: 1}}
+                            style={styles.addSpot}
                             onPress={() => this.addSpot(this.props.spot)}>
-                            <Text>Add Spot</Text>
+                            <Text
+                                style={{color: "white"}}>Add Spot</Text>
                             <Icon
                                 type="FontAwesome"
                                 name="plus"/>
                         </TouchableOpacity>
-                        <View>
-                            <Text>{this.props.spot.address}</Text>
+                        <View
+                            style={styles.address}>
+                            <Icon
+                                style={{color: "#6DAEDB"}}
+                                type="FontAwesome"
+                                name="map-marker"/>
+                            <Text style={{color: "white", marginLeft: 5}}>{this.props.spot.address}</Text>
                         </View>
                     </View>
                 )}
@@ -121,8 +127,30 @@ export default class Spot extends Component {
 
 const styles = StyleSheet.create({
     locationHeader: {
+        height: 100,
         flexDirection: "row",
         justifyContent: "space-around",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#1D70A2",
+        borderWidth: 1,
+        borderRadius: 5,
+        marginTop: 5,
+        marginBottom: 5
+    },
+    addSpot: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderBottomWidth: 1,
+        backgroundColor: "green",
+        borderWidth: 1,
+        borderRadius: 5,
+        marginBottom: 5
+    },
+    address: {
+        flexDirection: "row",
+        marginBottom: 6,
+        alignItems: "center",
+        borderBottomWidth: 1
     }
 })
