@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { View, Text, ScrollView } from "react-native"
 import Spot from "./Spot"
 import { SearchBar } from "react-native-elements"
+import Swiper from 'react-native-swiper'
 
 export default class AllSpots extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            currentUser: this.props.currentUser,
+            currentUser: this.props.navigation.state.params.currentUser,
             spots: []
         }
     }

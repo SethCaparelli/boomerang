@@ -120,9 +120,11 @@ export default class UsersSpot extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         width: "100%"
     },
     locationHeader: {
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",

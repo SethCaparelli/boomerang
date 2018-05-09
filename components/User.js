@@ -129,7 +129,7 @@ export default class User extends Component {
                 >
                 <Image
                   source={require("../assets/icons/boomerang_cocktail_icon_plus.png")}
-                  style={styles.iconPlus}
+                  style={{width: 23, height: 20}}
                   />
               </TouchableOpacity>
               <TouchableOpacity
@@ -156,7 +156,7 @@ export default class User extends Component {
                   />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("AllUsers", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
+                onPress={() => this.props.navigation.navigate("People", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
                 >
                 <Image
                   source={require("../assets/icons/boomerang_user_icon_plus.png")}

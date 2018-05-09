@@ -5,7 +5,7 @@ import { Icon } from "native-base"
 import Modal from "react-native-modal"
 import AllSpots from "./AllSpots"
 import UsersSpot from "./UsersSpot"
-
+import Swiper from 'react-native-swiper'
 export default class UsersSpots extends Component {
     constructor(props) {
         super(props)
@@ -51,6 +51,7 @@ export default class UsersSpots extends Component {
     render() {
         return (
             <View style={{
+                flex: 1,
                 alignItems: "center",
                 width: "100%",
                 backgroundColor: "#1D70A2",
@@ -72,8 +73,10 @@ export default class UsersSpots extends Component {
                         name="search" />
                     <Text>Find More Spots</Text>
                 </TouchableOpacity> */}
-                <ScrollView
-                    style={{flexDirection: "row"}}>
+                <Swiper
+                    autoplay={true}
+                    showsButtons={false}
+                    style={{flex: 0}}>
                 {
                 this.state.currentUser.spots.map((spot, i) => {
                     return (
@@ -84,9 +87,7 @@ export default class UsersSpots extends Component {
                         />
                     )
                 })}
-                </ScrollView>
-                <View
-                    style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+                </Swiper>
                     <Modal
                         style={styles.modal}
                         isVisible={this.state.modalVisible}>
@@ -100,7 +101,7 @@ export default class UsersSpots extends Component {
                             onPress={() => this.toggleModal()}
                         />
                     </Modal>
-                </View>
+                {/* </View> */}
             </View>
         )
     }
@@ -111,5 +112,5 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "white",
         marginTop: 200
-    }
+    },
 })

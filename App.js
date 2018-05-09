@@ -63,7 +63,7 @@ class App extends React.Component {
                   this.setState({
                     currentUser: userExists
                   })
-                  return this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})
+                this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})
                 } else {
                   let newUser = {
                     fbId: fbUser.id,
@@ -84,7 +84,7 @@ class App extends React.Component {
                     this.setState({
                       currentUser: user
                     })
-                    return this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})
+                  this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})
                   })
                   .catch(error => console.log(error))
                 }
@@ -113,8 +113,8 @@ class App extends React.Component {
           title="Sign In With Facebook"
           button
           type="facebook"
-          onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
-          // onPress={this._login}
+          // onPress={() => this.props.navigation.navigate("User", {currentUser: this.state.currentUser, userPicture: this.state.userPicture})}
+          onPress={this._login}
           style={{width: 300}}
         />
 
