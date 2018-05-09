@@ -108,9 +108,7 @@ export default class UsersSpot extends Component {
                 </TouchableOpacity>
                 {renderIf(this.state.infoVisible)(
                     <View>
-                        <View>
-                            <Text>{this.props.spot.address}</Text>
-                        </View>
+                        <Text>{this.props.spot.address}</Text>
                     </View>
                 )}
            </View>
@@ -128,6 +126,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
-        width: "100%"
+        width: "100%",
+        marginBottom: 10
     },
 })

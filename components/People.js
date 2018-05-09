@@ -61,7 +61,7 @@ export default class People extends Component {
                     return (
                         <Person
                             key={user._id}
-                            friend={user}
+                            person={user}
                             currentUser={this.state.currentUser}/>
                     )
                 })
@@ -77,6 +77,6 @@ const styles = StyleSheet.create({
         flex: 1,
         // justifyContent: "center",
         // alignItems: "center",
-        backgroundColor: "white"
+        backgroundColor: "#1B4353"
     },
 })

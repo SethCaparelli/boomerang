@@ -30,15 +30,6 @@ export default class Friends extends Component {
         this.setState({currentUser: user})
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
-    }
-
-    componentWillUnmount() {
-        Alert.alert('COMPONENT WILL UNMOUNT')
-      }
-
-
     render() {
         return (
             <View

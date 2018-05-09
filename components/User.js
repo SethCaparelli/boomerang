@@ -110,7 +110,6 @@ export default class User extends Component {
                 large
                 rounded
                 source={{uri: this.state.userPicture.data.url}}
-                onPress={() => console.log("Works!")}
                 activeOpacity={0.7}
               />
             <Text style={{color: "white", fontSize: 20, backgroundColor: "#173753", borderRadius: 30, width: 150, textAlign: "center"}}>{this.state.currentUser.name}</Text>
@@ -149,7 +148,7 @@ export default class User extends Component {
                 >
                 <Image
                   source={require("../assets/icons/boomerang_cocktail_icon_plus.png")}
-                  style={{width: 23, height: 20}}
+                  style={{width: 23, height: 21}}
                   />
               </TouchableOpacity>
               <TouchableOpacity
@@ -199,8 +198,9 @@ const styles = StyleSheet.create({
   },
   modal: {
     flex: 1,
-    backgroundColor: "white",
-    marginTop: 200
+    backgroundColor: "#1B4353",
+    marginTop: 80,
+    marginBottom: 30
   },
   buttonContainer: {
     flex: 1,

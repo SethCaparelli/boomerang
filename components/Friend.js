@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, Alert, Image } from "react-native"
 import { Avatar } from "react-native-elements"
 import { Icon } from "native-base"
 import FriendSpot from "./FriendSpot"
@@ -80,14 +80,6 @@ export default class Friend extends Component {
                 .catch(error => console.log(error))
     }
 
-    // getFriend = (friend, boomerang) => {
-    //     console.log("Friend:", friend)
-    //     fetch(`http://localhost:3000/users/${friend.fbId}`)
-    //     .then((response) => response.json())
-    //     .then(user => this.sendBoomerang(user, boomerang))
-    //     .catch(error => console.log(error))
-    //   }
-
     sendBoomerang = (friend, boomerang) => {
         console.log(friend, boomerang)
     }
@@ -107,15 +99,17 @@ export default class Friend extends Component {
                         onPress={() => console.log("Works!")}
                         activeOpacity={0.7}
                     />
-                    <Text>{friend.name}</Text>
+                    <Text style={{color: "white", fontSize: 20, marginLeft: 20}}>{friend.name}</Text>
                     <Icon style={{marginLeft: "auto"}}type="FontAwesome" name="chevron-right" />
                 </TouchableOpacity>
                 {renderIf(this.state.infoVisible)(
                 <View style={styles.userInfo}>
                     <View>
                         <View style={{flexDirection: "row", alignItems: "center", borderBottomWidth: 1}}>
-                            <Icon type="FontAwesome" name="map-marker" />
-                            <Text style={{fontWeight: 0.62}}>Spots</Text>
+                            <Image
+                                style={{height: 20, width: 20}}
+                                source={require("../assets/icons/boomerang_cocktail_icon.png")}/>
+                            <Text style={{fontWeight: 0.62, color: "white", marginLeft: 10}}>Spots</Text>
                         </View>
                         {friend.spots.map((spot, i) => {
                             return (
@@ -129,29 +123,39 @@ export default class Friend extends Component {
                     </View>
                     <View style={{marginBottom: 6}}>
                         <View style={{flexDirection: "row", alignItems: "center", borderBottomWidth: 1, marginBottom: 3}}>
-                            <Icon type="Ionicons" name="people"/>
-                            <Text style={{fontWeight: 0.62, fontStyle: "underlined"}}>Friends</Text>
+                            <Image
+                                style={{height: 20, width: 20}}
+                                source={require("../assets/icons/boomerang_user_icon.png")}/>
+                            <Text style={{fontWeight: 0.62, color: "white"}}>Friends</Text>
                         </View>
-                        <View>
+                        {/* <View>
                         {friend.friends.map(user => {
                             return(
                                 <View key={user._id} style={styles.user}>
+                                    <Avatar
+                                        small
+                                        rounded
+                                        source={{uri: this.state.userPicture.data.url}}
+                                        onPress={() => console.log("Works!")}
+                                        activeOpacity={0.7} />
                                     <Text key={user._id}>{user.name}</Text>
                                 </View>
                             )
                         })}
-                        </View>
+                        </View> */}
                     </View>
-                    <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 30}}>
-                        <Text>Remove Friend</Text>
-                        <TouchableOpacity
-                            onPress={() => this.removeFriend(friend)}>
+                    <TouchableOpacity
+                        onPress={() => this.removeFriend(friend)}
+                        style={styles.removeFriendButton}>
+                        <Text
+                            style={{color: "white"}}>
+                            Remove Friend
+                        </Text>
                             <Icon
                                 type="FontAwesome"
                                 name="minus"
                             />
-                        </TouchableOpacity>
-                    </View>
+                    </TouchableOpacity>
                 </View>)}
             </View>
         )
@@ -167,19 +171,32 @@ const styles = StyleSheet.create({
     card: {
         flex: 1,
         width: "100%",
-        height: 100,
+        height: 83,
         justifyContent: "space-around",
         alignItems: "center",
         flexDirection: "row",
         borderRadius: 4,
         borderWidth: 1,
-        borderColor: "black",
         marginTop: 3,
-        marginBottom: 3,
-        backgroundColor: "white"
+        marginBottom: 10,
+        backgroundColor: "#2892D7"
    },
    userInfo: {
        marginBottom: 30,
        flex: 1
+   },
+   removeFriendButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 30,
+    backgroundColor: "red",
+    borderWidth: 1,
+    borderRadius: 5
+   },
+   user: {
+       backgroundColor: "#2892D7",
+       borderWidth: 1,
+       borderRadius: 5
    }
 })

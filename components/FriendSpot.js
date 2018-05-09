@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, Alert, Image } from "react-native"
 import { Avatar } from "react-native-elements"
 import renderIf from "../assets/functions/renderIf"
 import { Icon } from "native-base"
@@ -152,15 +152,17 @@ export default class FriendSpot extends Component {
                         source={{uri: this.props.spot.picture}}
                         activeOpacity={0.7}
                     />
-                    <Text>{this.props.spot.name}</Text>
+                    <Text style={{color: "white", marginLeft: 10}}>{this.props.spot.name}</Text>
                     <Icon style={{marginLeft: "auto"}} type="FontAwesome" name="chevron-right" />
                 </TouchableOpacity>
                 {renderIf(this.state.infoVisible)(
                     <View style={{flex: 1, marginBottom: 30}}>
                         <View>
-                            <View>
-                                <Text>{this.props.spot.address}</Text>
-                            </View>
+                            <Icon
+                                style={{color: "#6DAEDB"}}
+                                type="FontAwesome"
+                                name="map-marker-alt"/>
+                            <Text style={{color: "white"}}>{this.props.spot.address}</Text>
                         </View>
                         <View>
                             <Text>Boomerangs</Text>
@@ -171,12 +173,12 @@ export default class FriendSpot extends Component {
                                     style={styles.drink}
                                     onPress={() => this.getFriend(drink)}>
                                     <View style={{flexDirection: "row", alignItems: "center", flex: 0.3, justifyContent: "space-between"}}>
-                                        <Text>{drink.type}</Text>
-                                        <Text>{drink.price}</Text>
+                                        <Text style={{color: "white"}}>{drink.type}</Text>
+                                        <Text style={{color: "white"}}>{drink.price}</Text>
                                     </View>
-                                    <Icon
-                                        type="FontAwesome"
-                                        name="plus"/>
+                                    <Image
+                                        style={{height: 20, width: 20}}
+                                        source={require("../assets/icons/boomerang_boomerang_icon.png")}/>
                                 </TouchableOpacity>
                                 )
                             })
@@ -193,11 +195,18 @@ const styles = StyleSheet.create({
     locationHeader: {
         flexDirection: "row",
         justifyContent: "space-around",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#1D70A2",
+        borderWidth: 1,
+        borderRadius: 5
     },
     drink: {
         flexDirection: "row",
+        width: "100%",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#173753",
+        borderWidth: 1,
+        borderRadius: 5
     }
 })
