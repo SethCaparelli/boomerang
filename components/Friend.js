@@ -109,7 +109,7 @@ export default class Friend extends Component {
                             <Image
                                 style={{height: 20, width: 20}}
                                 source={require("../assets/icons/boomerang_cocktail_icon.png")}/>
-                            <Text style={{fontWeight: 0.62, color: "white", marginLeft: 10}}>Spots</Text>
+                            <Text style={{fontWeight: 0.62, color: "white", marginLeft: 10, marginBottom: 5}}>Spots</Text>
                         </View>
                         {friend.spots.map((spot, i) => {
                             return (
@@ -121,14 +121,14 @@ export default class Friend extends Component {
                                 )
                         })}
                     </View>
-                    <View style={{marginBottom: 6}}>
+                    {/* <View style={{marginBottom: 6}}>
                         <View style={{flexDirection: "row", alignItems: "center", borderBottomWidth: 1, marginBottom: 3}}>
                             <Image
                                 style={{height: 20, width: 20}}
                                 source={require("../assets/icons/boomerang_user_icon.png")}/>
                             <Text style={{fontWeight: 0.62, color: "white"}}>Friends</Text>
                         </View>
-                        {/* <View>
+                        <View>
                         {friend.friends.map(user => {
                             return(
                                 <View key={user._id} style={styles.user}>
@@ -142,8 +142,8 @@ export default class Friend extends Component {
                                 </View>
                             )
                         })}
-                        </View> */}
-                    </View>
+                        </View>
+                    </View> */}
                     <TouchableOpacity
                         onPress={() => this.removeFriend(friend)}
                         style={styles.removeFriendButton}>

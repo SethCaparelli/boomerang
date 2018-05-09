@@ -156,16 +156,24 @@ export default class FriendSpot extends Component {
                     <Icon style={{marginLeft: "auto"}} type="FontAwesome" name="chevron-right" />
                 </TouchableOpacity>
                 {renderIf(this.state.infoVisible)(
-                    <View style={{flex: 1, marginBottom: 30}}>
-                        <View>
+                    <View style={{flex: 1, marginBottom: 30, borderBottomWidth: 1}}>
+                        <View
+                            style={styles.address}>
                             <Icon
                                 style={{color: "#6DAEDB"}}
                                 type="FontAwesome"
-                                name="map-marker-alt"/>
-                            <Text style={{color: "white"}}>{this.props.spot.address}</Text>
+                                name="map-marker"/>
+                            <Text style={{color: "white", marginLeft: 5}}>{this.props.spot.address}</Text>
                         </View>
                         <View>
-                            <Text>Boomerangs</Text>
+                            <View
+                                style={{flexDirection: "row", marginBottom: 8}}>
+                                <Image
+                                    style={{height: 25, width: 25}}
+                                    source={require("../assets/icons/boomerang_boomerang_icon.png")}/>
+                                <Text
+                                    style={{color: "white", fontSize: 18}}>Boomerangs</Text>
+                            </View>
                         {
                             this.props.spot.drinks.map((drink, i) => {
                                 return (
@@ -173,8 +181,8 @@ export default class FriendSpot extends Component {
                                     style={styles.drink}
                                     onPress={() => this.getFriend(drink)}>
                                     <View style={{flexDirection: "row", alignItems: "center", flex: 0.3, justifyContent: "space-between"}}>
-                                        <Text style={{color: "white"}}>{drink.type}</Text>
-                                        <Text style={{color: "white"}}>{drink.price}</Text>
+                                        <Text style={{color: "white"}}>{drink.type.charAt(0).toUpperCase() + drink.type.slice(1)}</Text>
+                                        <Text style={{color: "white"}}>{drink.price.charAt(0).toUpperCase() + drink.price.slice(1)}</Text>
                                     </View>
                                     <Image
                                         style={{height: 20, width: 20}}
@@ -208,5 +216,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#173753",
         borderWidth: 1,
         borderRadius: 5
+    },
+    address: {
+        flexDirection: "row",
+        marginBottom: 6,
+        alignItems: "center",
+        borderBottomWidth: 1
     }
 })
