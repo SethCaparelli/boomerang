@@ -93,7 +93,7 @@ export default class UsersSpot extends Component {
 
     render() {
         return (
-           <View>
+           <View style={styles.container}>
                 <TouchableOpacity
                     style={styles.locationHeader}
                     onPress={() => this.toggleInfo()}>
@@ -119,9 +119,13 @@ export default class UsersSpot extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        width: "100%"
+    },
     locationHeader: {
         flexDirection: "row",
         justifyContent: "space-around",
-        alignItems: "center"
-    }
+        alignItems: "center",
+        width: "100%"
+    },
 })

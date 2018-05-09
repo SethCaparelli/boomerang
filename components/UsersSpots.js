@@ -52,7 +52,10 @@ export default class UsersSpots extends Component {
         return (
             <View style={{
                 alignItems: "center",
-                width: "100%"}}>
+                width: "100%",
+                backgroundColor: "#1D70A2",
+                borderRadius: 10,
+                borderWidth: 1}}>
                 {/* <TouchableOpacity
                     onPress={() => this.toggleModal()}
                     style={{
@@ -69,7 +72,8 @@ export default class UsersSpots extends Component {
                         name="search" />
                     <Text>Find More Spots</Text>
                 </TouchableOpacity> */}
-                <ScrollView>
+                <ScrollView
+                    style={{flexDirection: "row"}}>
                 {
                 this.state.currentUser.spots.map((spot, i) => {
                     return (

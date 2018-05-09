@@ -5,6 +5,7 @@ import { Avatar, Button } from "react-native-elements"
 import mapStyle from "../jsons/mapStyle.json"
 import { Constants, MapView, Location, Permissions } from 'expo'
 import UsersSpots from "./UsersSpots"
+import renderIf from "../assets/functions/renderIf"
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 
@@ -17,12 +18,8 @@ export default class User extends Component {
           locationResult: null,
           currentUser: this.props.navigation.state.params.currentUser,
           userPicture: this.props.navigation.state.params.userPicture,
-          showSpots: true,
+          showSpots: false,
       }
-    }
-
-    componentWillUnmount() {
-      Alert.alert('COMPONENT WILL UNMOUNT')
     }
 
     componentWillFocus() {
@@ -78,9 +75,10 @@ export default class User extends Component {
       }})
     }
 
-    updateState = (user) => {
-      console.log("UpdateState:", user)
-      // this.setState({currentUser: user})
+    showSpots= () => {
+      this.setState({
+        showSpots: !this.state.showSpots
+      })
     }
 
 
@@ -119,15 +117,23 @@ export default class User extends Component {
             )
           })}
           </MapView>
-          <View style={{flex: 0.2, width: "100%"}}>
-            <UsersSpots
-              currentUser={this.state.currentUser}/>
+          <View style={{flex: 0.27, width: "100%"}}>
+            <View style={{flex: 1, width: "100%"}}>
+              {renderIf(this.state.showSpots)
+            (<UsersSpots
+                currentUser={this.state.currentUser}/>)}
+            </View>
             <View style={styles.buttonContainer}>
-              {/* <Icon
-                type="Ionicons"
-                name="people" /> */}
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("UsersSpots", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
+                  onPress={() => this.props.navigation.navigate("AllSpots", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
+                >
+                <Image
+                  source={require("../assets/icons/boomerang_cocktail_icon_plus.png")}
+                  style={styles.iconPlus}
+                  />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.showSpots()}
                 >
                 <Image
                   source={require("../assets/icons/boomerang_cocktail_icon.png")}
@@ -139,15 +145,22 @@ export default class User extends Component {
                 >
                 <Image
                   source={require("../assets/icons/boomerang_boomerang_icon.png")}
-                  style={styles.icon}
+                  style={{height: 40, width: 40}}
                   />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("Friends", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
                 >
                 <Image
                   source={require("../assets/icons/boomerang_user_icon.png")}
                   style={styles.icon}
+                  />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("AllUsers", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
+                >
+                <Image
+                  source={require("../assets/icons/boomerang_user_icon_plus.png")}
+                  style={styles.iconPlus}
                   />
               </TouchableOpacity>
             </View>
@@ -191,5 +204,9 @@ const styles = StyleSheet.create({
   icon: {
     width: 35,
     height: 35,
+  },
+  iconPlus: {
+    width: 23,
+    height: 20,
   }
 })
