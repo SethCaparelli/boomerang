@@ -25,6 +25,15 @@ export default class Friends extends Component {
         .catch(error => console.log(error))
     }
 
+    updateState = (user) => {
+        console.log("updateState: ", user)
+        this.setState({currentUser: user})
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
+    }
+
     componentWillUnmount() {
         Alert.alert('COMPONENT WILL UNMOUNT')
       }
@@ -36,7 +45,7 @@ export default class Friends extends Component {
                 <View
                     style={{flexDirection: "row", alignItems: "center"}}>
                     <Icon
-                        onPress={() => this.props.navigation.navigate("AllUsers", {currentUser: this.state.currentUser})}
+                        onPress={() => this.props.navigation.navigate("People", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
                         type="FontAwesome"
                         name="search" />
                     <Text>Find More Friends</Text>

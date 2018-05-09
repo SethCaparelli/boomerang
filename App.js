@@ -6,6 +6,7 @@ import People from "./components/People"
 import AllSpots from "./components/AllSpots"
 import Friends from "./components/Friends"
 import Boomerangs from "./components/Boomerangs"
+import UsersSpots from "./components/UsersSpots"
 import { SocialIcon, Avatar } from "react-native-elements"
 import {YellowBox} from 'react-native'
 console.disableYellowBox = true
@@ -29,14 +30,14 @@ class App extends React.Component {
       },
       userPicture: {
         data: {
-          url: "https://lookaside.facebook.com/platform/profilepic/?asid=211473406297130&height=200&width=200&ext=1525620472&hash=AeToBJ1YPcYdW7Qg"          
+          url: ""
         }
       }
     }
   }
 
   static navigationOptions = {
-    title: "Sign Out"
+    title: "Login"
   }
 
   _login = () => {
@@ -129,10 +130,10 @@ export default StackNavigator ({
   User: {
     screen: User
   },
-  UsersFriends: {
+  Friends: {
     screen: Friends
   },
-  AllUsers: {
+  People: {
     screen: People
   },
   AllSpots: {
@@ -140,6 +141,9 @@ export default StackNavigator ({
   },
   Boomerangs: {
     screen: Boomerangs
+  },
+  UsersSpots: {
+    screen: UsersSpots
   }
 })
 

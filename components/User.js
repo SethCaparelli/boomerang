@@ -3,7 +3,8 @@ import React, { Component } from "react"
 import { Platform, Text, View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native"
 import { Avatar, Button } from "react-native-elements"
 import mapStyle from "../jsons/mapStyle.json"
-import { Constants, MapView, Location, Permissions } from 'expo';
+import { Constants, MapView, Location, Permissions } from 'expo'
+import UsersSpots from "./UsersSpots"
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 
@@ -15,7 +16,8 @@ export default class User extends Component {
           hasLocationPermissions: false,
           locationResult: null,
           currentUser: this.props.navigation.state.params.currentUser,
-          userPicture: this.props.navigation.state.params.userPicture
+          userPicture: this.props.navigation.state.params.userPicture,
+          showSpots: true,
       }
     }
 
@@ -76,6 +78,11 @@ export default class User extends Component {
       }})
     }
 
+    updateState = (user) => {
+      console.log("UpdateState:", user)
+      // this.setState({currentUser: user})
+    }
+
 
   render() {
     return (
@@ -112,34 +119,38 @@ export default class User extends Component {
             )
           })}
           </MapView>
-          <View style={styles.buttonContainer}>
-            {/* <Icon
-              type="Ionicons"
-              name="people" /> */}
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("AllSpots", {currentUser: this.state.currentUser})}
-              >
-              <Image
-                source={require("../assets/icons/boomerang_cocktail_icon.png")}
-                style={styles.icon}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Boomerangs", {currentUser: this.state.currentUser})}
-              >
-              <Image
-                source={require("../assets/icons/boomerang_boomerang_icon.png")}
-                style={styles.icon}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("UsersFriends", {currentUser: this.state.currentUser})}
-              >
-              <Image
-                source={require("../assets/icons/boomerang_user_icon.png")}
-                style={styles.icon}
-                />
-            </TouchableOpacity>
+          <View style={{flex: 0.2, width: "100%"}}>
+            <UsersSpots
+              currentUser={this.state.currentUser}/>
+            <View style={styles.buttonContainer}>
+              {/* <Icon
+                type="Ionicons"
+                name="people" /> */}
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("UsersSpots", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
+                >
+                <Image
+                  source={require("../assets/icons/boomerang_cocktail_icon.png")}
+                  style={styles.icon}
+                  />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("Boomerangs", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
+                >
+                <Image
+                  source={require("../assets/icons/boomerang_boomerang_icon.png")}
+                  style={styles.icon}
+                  />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("Friends", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
+                >
+                <Image
+                  source={require("../assets/icons/boomerang_user_icon.png")}
+                  style={styles.icon}
+                  />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
     )
@@ -153,7 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   buttonContainer: {
-    flex: 0.12,
+    flex: 1,
     backgroundColor: "#1B4353",
     width: "100%",
     flexDirection: "row",
@@ -161,14 +172,15 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   avatarContainer: {
-    flex: 0.15,
+    flex: 1,
     zIndex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center"
   },
   map: {
     zIndex: 0,
     flex: 1,
+    height: "100%",
     width: "100%",
     position: "absolute",
     top: 0,

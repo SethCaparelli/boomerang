@@ -112,7 +112,6 @@ export default class FriendSpot extends Component {
     }
 
     sendBoomerang = (friend) => {
-        console.log(friend)
         const id = friend.fbId
         fetch(`http://localhost:3000/users/${id}`, {
             method: "PUT",
@@ -128,7 +127,15 @@ export default class FriendSpot extends Component {
                     "Success",
                     `Boomerang sent to ${friend.name}`
                 )
+            } else {
+                Alert.alert(
+                    "Sorry",
+                    "Unable to send Boomerang"
+                )
             }
+        })
+        .then(user => {
+            this.setState({currentUser: user})
         })
         .catch(error => console.log(error))
     }

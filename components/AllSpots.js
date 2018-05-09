@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { View, Text, ScrollView } from "react-native"
 import Spot from "./Spot"
+import { SearchBar } from "react-native-elements"
 
 export default class AllSpots extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            currentUser: this.props.navigation.state.params.currentUser,
+            currentUser: this.props.currentUser,
             spots: []
         }
     }
@@ -26,20 +27,31 @@ export default class AllSpots extends Component {
             })
             .catch(error => console.log(error))
     }
+
     render() {
         return (
-            <ScrollView>
-            {this.state.spots.map((spot, i) => {
-                return (
-                    <Spot
-                        key={i}
-                        currentUser={this.state.currentUser}
-                        spot={spot}
-                    />
-                )
-            })
-            }
-            </ScrollView>
+            <View
+                style={{flex: 1}}>
+                 <SearchBar
+                    onChangeText={(term) => this.searchUsers(term)}
+                    // onClear={someMethod}
+                    placeholder='Type Here...' />
+                <ScrollView
+                    style={{flex: 1}}>
+                {this.state.spots.map((spot, i) => {
+                    return (
+                        <Spot
+                            updateState={this.props.updateState}
+                            toggleModal={this.props.toggleModal}
+                            key={i}
+                            currentUser={this.state.currentUser}
+                            spot={spot}
+                        />
+                    )
+                })
+                }
+                </ScrollView>
+            </View>
         )
     }
 }

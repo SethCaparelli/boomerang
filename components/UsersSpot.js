@@ -4,7 +4,7 @@ import { Avatar } from "react-native-elements"
 import renderIf from "../assets/functions/renderIf"
 import { Icon } from "native-base"
 
-export default class Spot extends Component {
+export default class UsersSpot extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -28,10 +28,12 @@ export default class Spot extends Component {
     }
 
     addSpot = (spot) => {
+        console.log(spot)
         const id = this.state.currentUser.fbId
         const sameSpots = this.state.currentUser.spots.filter(place => {
             return place.name == spot.name
         })
+        console.log(sameSpots)
         if(sameSpots.length > 0) {
             Alert.alert(
                 `${spot.name} is already your spot`,
@@ -61,7 +63,9 @@ export default class Spot extends Component {
                             ],
                             {cancelable: false}
                         )
-                    return this.props.toggleModal
+                        this.setState({
+                            currentUser: user
+                        })
                     } else {
                         Alert.alert(
                             "Sorry",
@@ -72,16 +76,19 @@ export default class Spot extends Component {
                             {cancelable: false}
                         )
                     }
-                    return this.props.toggleModal
                 })
                 .then(user => {
                     this.setState({
                         currentUser: user
                     })
-                return this.props.updateState(user)
+                return this.props.navigation.state.params.updateState(user)
                 })
                 .catch(error => console.log(error))
         }
+    }
+
+    updateState = (user) => {
+        console.log(user)
     }
 
     render() {
@@ -101,14 +108,6 @@ export default class Spot extends Component {
                 </TouchableOpacity>
                 {renderIf(this.state.infoVisible)(
                     <View>
-                        <TouchableOpacity
-                            style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: 1}}
-                            onPress={() => this.addSpot(this.props.spot)}>
-                            <Text>Add Spot</Text>
-                            <Icon
-                                type="FontAwesome"
-                                name="plus"/>
-                        </TouchableOpacity>
                         <View>
                             <Text>{this.props.spot.address}</Text>
                         </View>

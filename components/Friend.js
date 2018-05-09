@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native"
 import { Avatar } from "react-native-elements"
 import { Icon } from "native-base"
 import FriendSpot from "./FriendSpot"
@@ -25,23 +25,22 @@ export default class Friend extends Component {
             .catch(error => console.log(error))
     }
 
+    updateState = (user) => {
+        this.setState({currentUser: user})
+    }
+
     toggleInfo = () => {
         this.setState({infoVisible: !this.state.infoVisible})
     }
 
     removeFriend = (friend) => {
-        console.log("currentUser:", this.state.currentUser)
         const id = this.state.currentUser.fbId
-        console.log("friend:", friend)
-        console.log("Friend Array:", this.state.currentUser.friends)
         const newFriends = this.state.currentUser.friends.filter(user => user._id !== friend._id)
         const currentUser = this.state.currentUser
         currentUser.friends = newFriends
         this.setState({
             currentUser
         })
-        console.log("newCurrentUser:", this.state.currentUser)
-        console.log("NewArray:", newFriends)
         fetch(`http://localhost:3000/users/${id}`, {
             method: "PUT",
                 headers: {
@@ -51,6 +50,7 @@ export default class Friend extends Component {
                 body: JSON.stringify(this.state.currentUser)
                 })
                 .then(response => {
+                    console.log(response)
                     if(response.status == 200) {
                         Alert.alert(
                             "Success",
@@ -60,9 +60,6 @@ export default class Friend extends Component {
                             ],
                             {cancelable: false}
                         )
-                        this.setState({
-                            currentUser: user
-                        })
                     } else {
                         Alert.alert(
                             "Sorry",
