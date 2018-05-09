@@ -48,6 +48,7 @@ export default class Friends extends Component {
                 this.state.currentUser.friends.map((friend, i) => {
                     return (
                         <Friend
+                            toggleModal={this.props.toggleModal}
                             currentUser={this.state.currentUser}
                             friend={friend}
                             key={i}

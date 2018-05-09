@@ -48,22 +48,6 @@ export default class UsersSpots extends Component {
                 backgroundColor: "#1D70A2",
                 borderRadius: 10,
                 borderWidth: 1}}>
-                {/* <TouchableOpacity
-                    onPress={() => this.toggleModal()}
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: 100,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        backgroundColor: "green"
-                        }}>
-                    <Icon
-                        type="FontAwesome"
-                        name="search" />
-                    <Text>Find More Spots</Text>
-                </TouchableOpacity> */}
                 <Swiper
                     autoplay={true}
                     showsPagination={false}
@@ -79,20 +63,6 @@ export default class UsersSpots extends Component {
                     )
                 })}
                 </Swiper>
-                    <Modal
-                        style={styles.modal}
-                        isVisible={this.state.modalVisible}>
-                        <AllSpots
-                            updateState={this.updateState}
-                            toggleModal={this.toggleModal}
-                            currentUser={this.state.currentUser}
-                        />
-                        <Button
-                            title="Close"
-                            onPress={() => this.toggleModal()}
-                        />
-                    </Modal>
-                {/* </View> */}
             </View>
         )
     }

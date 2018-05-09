@@ -75,6 +75,7 @@ export default class Friend extends Component {
                     this.setState({
                         currentUser: user
                     })
+                return this.props.toggleModal()
                 })
                 .catch(error => console.log(error))
     }

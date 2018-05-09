@@ -97,7 +97,7 @@ export default class User extends Component {
             isVisible={this.state.modalVisible}>
             <Friends
                 // updateState={this.updateState}
-                // toggleModal={this.toggleModal}
+                toggleModal={this.toggleModal}
                 currentUser={this.state.currentUser}
             />
             <Button
