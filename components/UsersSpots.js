@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, Alert, TouchableOpacity, StyleSheet, Button } from "react-native"
 import Friend from "./Friend"
 import { Icon } from "native-base"
-import Modal from "react-native-modal"
 import AllSpots from "./AllSpots"
 import UsersSpot from "./UsersSpot"
 import Swiper from 'react-native-swiper'
@@ -33,14 +32,6 @@ export default class UsersSpots extends Component {
         console.log("updateState: ", user)
         // this.setState({currentUser: user})
     }
-
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
-    }
-
-    componentWillUnmount() {
-        Alert.alert('COMPONENT WILL UNMOUNT')
-      }
 
     toggleModal = () => {
         this.setState({
@@ -75,7 +66,7 @@ export default class UsersSpots extends Component {
                 </TouchableOpacity> */}
                 <Swiper
                     autoplay={true}
-                    showsButtons={false}
+                    showsPagination={false}
                     style={{flex: 0}}>
                 {
                 this.state.currentUser.spots.map((spot, i) => {
@@ -106,11 +97,3 @@ export default class UsersSpots extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    modal: {
-        flex: 1,
-        backgroundColor: "white",
-        marginTop: 200
-    },
-})

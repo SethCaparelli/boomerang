@@ -7,7 +7,7 @@ export default class Friends extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            currentUser: this.props.navigation.state.params.currentUser,
+            currentUser: this.props.currentUser,
         }
     }
 
@@ -41,15 +41,8 @@ export default class Friends extends Component {
 
     render() {
         return (
-            <View>
-                <View
-                    style={{flexDirection: "row", alignItems: "center"}}>
-                    <Icon
-                        onPress={() => this.props.navigation.navigate("People", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
-                        type="FontAwesome"
-                        name="search" />
-                    <Text>Find More Friends</Text>
-                </View>
+            <View
+                style={{flex: 1, width: "100%"}}>
                 <ScrollView>
                 {
                 this.state.currentUser.friends.map((friend, i) => {

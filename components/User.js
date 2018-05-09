@@ -1,11 +1,13 @@
 import Expo from "expo"
 import React, { Component } from "react"
-import { Platform, Text, View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native"
-import { Avatar, Button } from "react-native-elements"
+import { Platform, Text, View, StyleSheet, Image, TouchableOpacity, Alert, Button } from "react-native"
+import { Avatar } from "react-native-elements"
 import mapStyle from "../jsons/mapStyle.json"
 import { Constants, MapView, Location, Permissions } from 'expo'
 import UsersSpots from "./UsersSpots"
 import renderIf from "../assets/functions/renderIf"
+import Modal from "react-native-modal"
+import Friends from "./Friends"
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 
@@ -81,10 +83,28 @@ export default class User extends Component {
       })
     }
 
+    toggleModal = () => {
+      this.setState({
+          modalVisible: !this.state.modalVisible
+      })
+  }
 
   render() {
     return (
         <View style={styles.container}>
+          <Modal
+            style={styles.modal}
+            isVisible={this.state.modalVisible}>
+            <Friends
+                // updateState={this.updateState}
+                // toggleModal={this.toggleModal}
+                currentUser={this.state.currentUser}
+            />
+            <Button
+                title="Close"
+                onPress={() => this.toggleModal()}
+            />
+          </Modal>
           <View style={styles.avatarContainer}>
             <Avatar
                 large
@@ -149,6 +169,7 @@ export default class User extends Component {
                   />
               </TouchableOpacity>
               <TouchableOpacity
+                onPress={() => this.toggleModal()}
                 >
                 <Image
                   source={require("../assets/icons/boomerang_user_icon.png")}
@@ -175,6 +196,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between"
+  },
+  modal: {
+    flex: 1,
+    backgroundColor: "white",
+    marginTop: 200
   },
   buttonContainer: {
     flex: 1,
