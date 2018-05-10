@@ -110,7 +110,7 @@ export default class UsersSpot extends Component {
                     <View
                         style={styles.address}>
                         <Icon
-                            style={{color: "#6DAEDB"}}
+                            style={{color: "#173753"}}
                             type="FontAwesome"
                             name="map-marker"/>
                         <Text style={{color: "white", marginLeft: 5}}>{this.props.spot.address}</Text>
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginBottom: 6,
         alignItems: "center",
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+
     }
 })

@@ -55,7 +55,7 @@ export default class Boomerang extends Component {
             </TouchableOpacity>
             {renderIf(this.state.showBoomerangInfo)(
             <View>
-                <Text>From</Text>
+                <Text style={{color: "white"}}>From:</Text>
                 <View
                     style={styles.user}>
                     <Avatar
@@ -67,9 +67,9 @@ export default class Boomerang extends Component {
                     <Text
                         style={{color: "white", marginLeft: 5}}>{this.state.boomerang.user.name}</Text>
                 </View>
-                <Text>Spot</Text>
+                <Text style={{color: "white"}}>Spot:</Text>
                 <View
-                    style={styles.user}>
+                    style={styles.spot}>
                     <Avatar
                         small
                         rounded
@@ -138,6 +138,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 20,
         marginTop: 20
+    },
+    user: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#1D70A2",
+        borderWidth: 1,
+        borderRadius: 5
+    },
+    spot: {
+        flexDirection: "row",
+        alignItems: "center"
     }
 })
 

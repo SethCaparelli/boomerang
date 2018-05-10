@@ -36,20 +36,20 @@ export default class Boomerangs extends Component {
                 style={{height: 50, width: 50}}
                 source={require("../assets/icons/boomerang_boomerang_icon.png")}/>
             </View>
-          {this.state.currentUser.boomerangReceived
-            ?   this.state.currentUser.boomerangReceived.map((boomerang, i) => {
+            <ScrollView
+              style={{width: "100%"}}>
+            {this.state.currentUser.boomerangReceived
+              ? this.state.currentUser.boomerangReceived.map((boomerang, i) => {
                   return(
-                    <ScrollView
-                      style={{width: "100%", flex: 1}}>
                         <Boomerang
                           key={i}
                           boomerang={boomerang}
                           currentUser={this.state.currentUser}/>
-                    </ScrollView>
                   )
               })
             : <Text>Sorry, You have no Boomerangs</Text>
           }
+            </ScrollView>
         </View>
     )
   }

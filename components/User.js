@@ -89,6 +89,16 @@ export default class User extends Component {
       })
   }
 
+  updateState = () => {
+    const id = this.state.currentUser.fbId
+    fetch(`http://localhost:3000/users/${id}`)
+    .then(response => response.json())
+    .then(user => {
+        this.setState({currentUser: user})
+    })
+    .catch(error => console.log(error))
+  }
+
   render() {
     return (
         <View style={styles.container}>
@@ -144,7 +154,7 @@ export default class User extends Component {
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate("AllSpots", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
+                  onPress={() => this.props.navigation.navigate("AllSpots", {currentUser: this.state.currentUser, updateState: this.updateState})}
                 >
                 <Image
                   source={require("../assets/icons/boomerang_cocktail_icon_plus.png")}
@@ -160,7 +170,7 @@ export default class User extends Component {
                   />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("Boomerangs", {currentUser: this.state.currentUser}, {updateState: this.updateState})}
+                onPress={() => this.props.navigation.navigate("Boomerangs", {currentUser: this.state.currentUser, updateState: this.updateState})}
                 >
                 <Image
                   source={require("../assets/icons/boomerang_boomerang_icon.png")}

@@ -75,10 +75,10 @@ export default class Spot extends Component {
                     return this.props.toggleModal
                 })
                 .then(user => {
+                    this.props.updateState(user)
                     this.setState({
                         currentUser: user
                     })
-                return this.props.updateState(user)
                 })
                 .catch(error => console.log(error))
         }

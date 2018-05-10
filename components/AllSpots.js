@@ -42,7 +42,7 @@ export default class AllSpots extends Component {
                 {this.state.spots.map((spot, i) => {
                     return (
                         <Spot
-                            updateState={this.props.updateState}
+                            updateState={this.props.navigation.state.params.updateState}
                             toggleModal={this.props.toggleModal}
                             key={i}
                             currentUser={this.state.currentUser}
